@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1022756920767",
+    "firebase_url": "https://best-hindi-shayari-fea3f.firebaseio.com",
+    "project_id": "best-hindi-shayari-fea3f",
+    "storage_bucket": "best-hindi-shayari-fea3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022756920767:android:93f88d7a11aa762162150a",
+        "android_client_info": {
+          "package_name": "amit.action.besthindishayari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022756920767-1hb32lhmv2ghqff6ip48o19pj3fddq7s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "amit.action.besthindishayari",
+            "certificate_hash": "9287b88a1c99801633f88db1db930ed9bbbe3947"
+          }
+        },
+        {
+          "client_id": "1022756920767-c2q28gor8qk2op9kcbpgjqjnd88o6m0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa3h60Ug5bBmqmajRzvYM1cH0uOm8-aeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022756920767-c2q28gor8qk2op9kcbpgjqjnd88o6m0o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
