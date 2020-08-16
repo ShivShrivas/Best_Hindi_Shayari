@@ -3,24 +3,32 @@ package amit.action.besthindishayari;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.accounts.NetworkErrorException;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText nameField,emailField,passField,conPassField;
     private Button signupBtn;
     private ProgressDialog mProgress;
+    private FirebaseUser curUser;
+    private TextView loginLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +43,19 @@ public class RegistrationActivity extends AppCompatActivity {
         passField=findViewById(R.id.signup_password);
         conPassField=findViewById(R.id.signup_con_password);
         signupBtn=findViewById(R.id.signup_button);
+        loginLink=findViewById(R.id.signup_login_link);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 verifyDetails();
+            }
+        });
+
+        loginLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
             }
         });
     }
@@ -79,7 +95,7 @@ public class RegistrationActivity extends AppCompatActivity {
         registerUser(email,pass,name);
     }
 
-    private void registerUser(String email, String pass, String name) {
+    private void registerUser(String email, String pass, final String name) {
         mProgress.show();
         mAuth.createUserWithEmailAndPassword(email,pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -87,9 +103,30 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     mProgress.dismiss();
-                    Toast.makeText(RegistrationActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                    curUser=mAuth.getCurrentUser();
+                    UserProfileChangeRequest profileChangeRequest=new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+                    curUser.updateProfile(profileChangeRequest);
+                    Toast.makeText(RegistrationActivity.this, "Registration Successful. ", Toast.LENGTH_SHORT).show();
+                    goToMainActivity();
+
+                }else{
+                    mProgress.dismiss();
+                    if(task.getException() instanceof FirebaseAuthUserCollisionException){
+                        Toast.makeText(RegistrationActivity.this, "Already have an account!, please login", Toast.LENGTH_SHORT).show();
+                    }else if(task.getException() instanceof NetworkErrorException){
+                        Toast.makeText(RegistrationActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(RegistrationActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
     }
+
+    private void goToMainActivity() {
+        Intent intent=new Intent(RegistrationActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
