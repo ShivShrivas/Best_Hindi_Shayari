@@ -50,6 +50,20 @@ public class LoginActivity extends AppCompatActivity {
                 verfifyDetails();
             }
         });
+
+        forgotPassLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
+            }
+        });
+
+        signupLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this,RegistrationActivity.class));
+            }
+        });
     }
 
     private void verfifyDetails() {
