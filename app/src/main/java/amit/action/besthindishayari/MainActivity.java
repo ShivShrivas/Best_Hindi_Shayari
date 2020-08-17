@@ -24,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth=FirebaseAuth.getInstance();
         curUser=mAuth.getCurrentUser();
-        signUp=findViewById(R.id.main_signup);
-        logoutBtn=findViewById(R.id.main_logout);
+        //signUp=findViewById(R.id.main_signup);
+        //logoutBtn=findViewById(R.id.main_logout);
+/*
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
                 goToSignUp();
             }
         });
+*/
+/*
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 checkUserExistence();
             }
         });
+*/
 
     }
 
