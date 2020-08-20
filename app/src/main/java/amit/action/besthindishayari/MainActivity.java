@@ -1,18 +1,29 @@
 package amit.action.besthindishayari;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,7 +35,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser curUser;
-    private Button signUp,logoutBtn;
+    private TextView headerName,headerEmail;
+    boolean doubleTap=false;
+
+    private Toolbar mToolbar;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    NavigationView navigationView;
+    DrawerLayout drawerLayout;
 
 
     @Override
@@ -40,6 +57,32 @@ public class MainActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         curUser=mAuth.getCurrentUser();
 
+        mToolbar=findViewById(R.id.main_app_bar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Hindi Shayari 2020");
+
+        drawerLayout=findViewById(R.id.main_drawer_layout);
+        actionBarDrawerToggle=new ActionBarDrawerToggle(MainActivity.this,drawerLayout,R.string.drawer_open,R.string.drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        navigationView=findViewById(R.id.main_navigation_view);
+
+        View navView=navigationView.inflateHeaderView(R.layout.navigation_header);
+
+        headerName=navView.findViewById(R.id.nav_header_name);
+        headerEmail=navView.findViewById(R.id.nav_header_email);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                UserMenuSelector(menuItem);
+                return false;
+            }
+        });
+
         List<String> list=new ArrayList<>();
         list.add("Alone");
         list.add("Sad");
@@ -51,6 +94,57 @@ public class MainActivity extends AppCompatActivity {
         list.add("Zindagi");
 
 
+    }
+
+    private void UserMenuSelector(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+
+            case R.id.nav_home:
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                Toast.makeText(getApplicationContext(), "You are on HOME!", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.nav_logout:
+
+                AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Dou you really want to logout!");
+                builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mAuth.signOut();
+                        checkUserExistence();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alertDialog=builder.create();
+                alertDialog.show();
+
+                break;
+
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleTap){
+            super.onBackPressed();
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Double tap back to exit the app!", Toast.LENGTH_SHORT).show();
+            doubleTap=true;
+            Handler handler=new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleTap=false;
+                }
+            },500); //half second
+        }
     }
 
     @Override
@@ -79,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToTopicMenu(View view) {
-        String id=view.getResources().getResourceEntryName(view.getId());
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+        String name_id=view.getResources().getResourceEntryName(view.getId());
+        Toast.makeText(this, name_id, Toast.LENGTH_SHORT).show();
     }
 }
