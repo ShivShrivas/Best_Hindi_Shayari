@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private static int SPLASH_TIMER=5000;
+    private static int SPLASH_TIMER=3000;
     private ImageView appImage;
     private TextView poweredName;
     Animation sideAnim,bottomAnim;

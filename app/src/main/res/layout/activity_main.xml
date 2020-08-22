@@ -24,28 +24,31 @@
                 layout="@layout/app_bar_layout"></include>
 
             <TextView
+                android:id="@+id/main_text_categories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Categories"
-                android:textColor="#fff"
-                android:textSize="30sp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif-medium"/>
+                android:fontFamily="sans-serif-medium"
+                android:text="Categories"
+                android:textColor="#fff"
+                android:textSize="30sp" />
+
             <GridLayout
+                android:id="@+id/main_grid_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:columnCount="2"
                 android:layout_margin="5dp"
                 android:alignmentMode="alignMargins"
+                android:columnCount="2"
                 android:columnOrderPreserved="false">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="170dp"
                     android:layout_height="170dp"
+                    android:layout_gravity=""
                     android:layout_margin="15dp"
                     app:cardCornerRadius="12dp"
-                    android:layout_gravity=""
                     app:cardElevation="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,10 +70,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
                             android:fontFamily="@font/berkshire_swash"
                             android:text="Alone"
                             android:textColor="#FFFFFF"
-                            android:layout_marginBottom="8dp"
                             android:textSize="30sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -81,9 +84,9 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="170dp"
                     android:layout_height="170dp"
+                    android:layout_gravity=""
                     android:layout_margin="15dp"
                     app:cardCornerRadius="12dp"
-                    android:layout_gravity=""
                     app:cardElevation="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,8 +97,8 @@
                             android:id="@+id/sad"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitXY"
                             android:onClick="goToTopicMenu"
+                            android:scaleType="fitXY"
                             android:src="@drawable/sad"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -105,22 +108,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
                             android:fontFamily="@font/berkshire_swash"
                             android:text="Sad"
                             android:textColor="#FFFFFF"
-                            android:layout_marginBottom="8dp"
                             android:textSize="30sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="170dp"
                     android:layout_height="170dp"
+                    android:layout_gravity=""
                     android:layout_margin="15dp"
                     app:cardCornerRadius="12dp"
-                    android:layout_gravity=""
                     app:cardElevation="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -131,8 +135,8 @@
                             android:id="@+id/love"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitXY"
                             android:onClick="goToTopicMenu"
+                            android:scaleType="fitXY"
                             android:src="@drawable/love"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -142,22 +146,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
                             android:fontFamily="@font/berkshire_swash"
                             android:text="Love"
                             android:textColor="#FFFFFF"
-                            android:layout_marginBottom="8dp"
                             android:textSize="30sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="170dp"
                     android:layout_height="170dp"
+                    android:layout_gravity=""
                     android:layout_margin="15dp"
                     app:cardCornerRadius="12dp"
-                    android:layout_gravity=""
                     app:cardElevation="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -168,8 +173,8 @@
                             android:id="@+id/dosti"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitXY"
                             android:onClick="goToTopicMenu"
+                            android:scaleType="fitXY"
                             android:src="@drawable/dosti"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -179,22 +184,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
                             android:fontFamily="@font/berkshire_swash"
                             android:text="Dosti"
                             android:textColor="#FFFFFF"
-                            android:layout_marginBottom="8dp"
                             android:textSize="30sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="170dp"
                     android:layout_height="170dp"
+                    android:layout_gravity=""
                     android:layout_margin="15dp"
                     app:cardCornerRadius="12dp"
-                    android:layout_gravity=""
                     app:cardElevation="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -205,8 +211,8 @@
                             android:id="@+id/dard"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitXY"
                             android:onClick="goToTopicMenu"
+                            android:scaleType="fitXY"
                             android:src="@drawable/dard"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -216,10 +222,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
                             android:fontFamily="@font/berkshire_swash"
                             android:text="Dard"
                             android:textColor="#FFFFFF"
-                            android:layout_marginBottom="8dp"
                             android:textSize="30sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

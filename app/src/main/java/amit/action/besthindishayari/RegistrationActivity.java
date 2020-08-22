@@ -7,6 +7,7 @@ import android.accounts.NetworkErrorException;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private ProgressDialog mProgress;
     private FirebaseUser curUser;
     private TextView loginLink;
+    private boolean doubleTap=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +123,24 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleTap){
+            super.onBackPressed();
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Double tap back to exit the app!", Toast.LENGTH_SHORT).show();
+            doubleTap=true;
+            Handler handler=new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleTap=false;
+                }
+            },500); //half second
+        }
     }
 
     private void goToMainActivity() {

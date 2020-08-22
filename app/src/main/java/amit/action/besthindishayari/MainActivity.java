@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,44 +39,56 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser curUser;
-    private TextView headerName,headerEmail;
+    private TextView headerName,headerEmail,categoriesText;
     boolean doubleTap=false;
 
     private Toolbar mToolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    private Animation sideAnim,bottomAnim;
+    GridLayout gridLayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_main);
 
         mAuth=FirebaseAuth.getInstance();
         curUser=mAuth.getCurrentUser();
 
+        //Hooks
         mToolbar=findViewById(R.id.main_app_bar);
+        gridLayout=findViewById(R.id.main_grid_layout);
+        categoriesText=findViewById(R.id.main_text_categories);
+        navigationView=findViewById(R.id.main_navigation_view);
+
+        //Toolbar
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Hindi Shayari 2020");
 
         drawerLayout=findViewById(R.id.main_drawer_layout);
-        actionBarDrawerToggle=new ActionBarDrawerToggle(MainActivity.this,drawerLayout,R.string.drawer_open,R.string.drawer_close);
+
+        //NavigationView
+        actionBarDrawerToggle=new ActionBarDrawerToggle(MainActivity.this,drawerLayout,mToolbar,R.string.drawer_open,R.string.drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        navigationView=findViewById(R.id.main_navigation_view);
 
         View navView=navigationView.inflateHeaderView(R.layout.navigation_header);
-
         headerName=navView.findViewById(R.id.nav_header_name);
         headerEmail=navView.findViewById(R.id.nav_header_email);
+
+        Snackbar snackbar=Snackbar.make(drawerLayout,"Welcome "+curUser.getDisplayName(),Snackbar.LENGTH_LONG);
+        snackbar.show();
+
+        //Animations
+        sideAnim= AnimationUtils.loadAnimation(this,R.anim.side_anim);
+        bottomAnim=AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
+        gridLayout.setAnimation(sideAnim);
+        categoriesText.setAnimation(bottomAnim);
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -131,19 +147,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (doubleTap){
-            super.onBackPressed();
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Double tap back to exit the app!", Toast.LENGTH_SHORT).show();
-            doubleTap=true;
-            Handler handler=new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    doubleTap=false;
-                }
-            },500); //half second
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            if (doubleTap){
+                super.onBackPressed();
+            }
+            else {
+                Snackbar backSnakbar=Snackbar.make(drawerLayout,"Press back again to exit Best Hindi Shayari app",Snackbar.LENGTH_SHORT);
+                backSnakbar.show();
+                //Toast.makeText(getApplicationContext(), "Double tap back to exit the app!", Toast.LENGTH_SHORT).show();
+                doubleTap=true;
+                Handler handler=new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        doubleTap=false;
+                    }
+                },1000); //one second
+            }
         }
     }
 
@@ -154,11 +176,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void goToLogin(View view) {
-
-        Snackbar snackbar=Snackbar.make(view,"Welcome "+curUser.getDisplayName(),Snackbar.LENGTH_LONG);
-        snackbar.show();
-    }
 
     public void goToSignUp() {
         Intent intent= new Intent(MainActivity.this,RegistrationActivity.class);
@@ -174,6 +191,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToTopicMenu(View view) {
         String name_id=view.getResources().getResourceEntryName(view.getId());
-        Toast.makeText(this, name_id, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, name_id, Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(MainActivity.this,TopicShayariActivity.class);
+        intent.putExtra("topic_name",name_id);
+        startActivity(intent);
     }
 }
