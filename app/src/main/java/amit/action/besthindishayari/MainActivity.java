@@ -80,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
         headerName=navView.findViewById(R.id.nav_header_name);
         headerEmail=navView.findViewById(R.id.nav_header_email);
 
-        Snackbar snackbar=Snackbar.make(drawerLayout,"Welcome "+curUser.getDisplayName(),Snackbar.LENGTH_LONG);
-        snackbar.show();
-
         //Animations
         sideAnim= AnimationUtils.loadAnimation(this,R.anim.side_anim);
         bottomAnim=AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
@@ -156,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
             else {
                 Snackbar backSnakbar=Snackbar.make(drawerLayout,"Press back again to exit Best Hindi Shayari app",Snackbar.LENGTH_SHORT);
                 backSnakbar.show();
-                //Toast.makeText(getApplicationContext(), "Double tap back to exit the app!", Toast.LENGTH_SHORT).show();
                 doubleTap=true;
                 Handler handler=new Handler();
                 handler.postDelayed(new Runnable() {
@@ -173,7 +169,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         checkUserExistence();
-
+        Snackbar snackbar=Snackbar.make(drawerLayout,"Welcome "+curUser.getDisplayName(),Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
 
@@ -191,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToTopicMenu(View view) {
         String name_id=view.getResources().getResourceEntryName(view.getId());
-        //Toast.makeText(this, name_id, Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(MainActivity.this,TopicShayariActivity.class);
         intent.putExtra("topic_name",name_id);
         startActivity(intent);

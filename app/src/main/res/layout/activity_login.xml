@@ -34,15 +34,21 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:hint="Enter Email..."
-        android:textColorHint="@color/cardview_dark_background"
+        app:hintTextColor="@color/colorAccent"
+        app:boxStrokeColor="@color/colorAccent"
+        app:boxStrokeWidthFocused="2dp"
+        app:startIconDrawable="@drawable/ic_email_24"
+        app:startIconTint="@color/colorAccent"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
@@ -50,21 +56,27 @@
             android:id="@+id/login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_email_24"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:hint="Enter Password..."
-        android:textColorHint="@color/cardview_dark_background"
+        app:hintTextColor="@color/colorAccent"
+        app:boxStrokeColor="@color/colorAccent"
+        app:boxStrokeWidthFocused="2dp"
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/ic_password_24"
+        app:startIconTint="@color/colorAccent"
+        app:passwordToggleTint="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
@@ -72,8 +84,8 @@
             android:id="@+id/login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_password_24"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -102,6 +114,7 @@
         android:textColor="#000000"
         android:textSize="15sp"
         android:textStyle="bold"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,6 +128,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Forgot Password?"
+        android:padding="10dp"
         android:textColor="#000000"
         android:textColorHighlight="#FFFFFF"
         android:textSize="16sp"
