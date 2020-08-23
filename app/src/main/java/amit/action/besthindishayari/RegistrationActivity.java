@@ -30,7 +30,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private ProgressDialog mProgress;
     private FirebaseUser curUser;
     private TextView loginLink;
-    private boolean doubleTap=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +57,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
+                finish();
             }
         });
     }
@@ -127,20 +127,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (doubleTap){
-            super.onBackPressed();
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Double tap back to exit the app!", Toast.LENGTH_SHORT).show();
-            doubleTap=true;
-            Handler handler=new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    doubleTap=false;
-                }
-            },500); //half second
-        }
+        startActivity(new Intent(RegistrationActivity.this,HomeActivity.class));
+        finish();
     }
 
     private void goToMainActivity() {

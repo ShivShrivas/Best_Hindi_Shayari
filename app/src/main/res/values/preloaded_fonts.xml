@@ -3,5 +3,8 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/berkshire_swash</item>
         <item>@font/bungee</item>
+        <item>@font/montserrat</item>
+        <item>@font/montserrat_bold</item>
+        <item>@font/tenor_sans</item>
     </array>
 </resources>

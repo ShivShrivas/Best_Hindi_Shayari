@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onBackPressed();
             }
             else {
-                Snackbar backSnakbar=Snackbar.make(drawerLayout,"Press back again to exit Best Hindi Shayari app",Snackbar.LENGTH_SHORT);
+                Snackbar backSnakbar=Snackbar.make(drawerLayout,"Press back twice to exit Best Hindi Shayari app",Snackbar.LENGTH_SHORT);
                 backSnakbar.show();
                 doubleTap=true;
                 Handler handler=new Handler();

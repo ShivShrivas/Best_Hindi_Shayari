@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/button_text_color"
+    android:background="@color/app_background_color"
     tools:context=".LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,20 +13,19 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="125dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/shayari_app_logo" />
+            app:srcCompat="@drawable/app_main_image" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:fontFamily="@font/bungee"
             android:text="Hello there,\nWelcome back"
             android:textAllCaps="true"
@@ -59,6 +58,7 @@
                 android:id="@+id/login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
                 android:inputType="textEmailAddress"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -87,6 +87,7 @@
                 android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
                 android:inputType="textPassword"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -98,7 +99,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@color/text_color"
+            android:backgroundTint="@color/text_color"
+            android:fontFamily="@font/montserrat_bold"
             android:text="Login"
             android:textColor="@color/button_text_color"
             android:textSize="18sp"
@@ -114,11 +116,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat"
             android:padding="10dp"
             android:text="New User?  Sign UP"
             android:textAllCaps="true"
             android:textColor="@color/text_color"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -132,10 +135,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat"
             android:padding="10dp"
             android:text="Forgot Password?"
             android:textColor="@color/text_color"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
@@ -145,9 +149,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/montserrat"
             android:text="Sign In to continue"
             android:textColor="@color/secondary_text_color"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
