@@ -169,20 +169,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         checkUserExistence();
-        Snackbar snackbar=Snackbar.make(drawerLayout,"Welcome "+curUser.getDisplayName(),Snackbar.LENGTH_LONG);
-        snackbar.show();
+        //Snackbar snackbar=Snackbar.make(drawerLayout,"Welcome "+curUser.getDisplayName(),Snackbar.LENGTH_LONG);
+        //snackbar.show();
     }
 
 
-    public void goToSignUp() {
-        Intent intent= new Intent(MainActivity.this,RegistrationActivity.class);
+    public void goToHomeActivity() {
+        Intent intent= new Intent(MainActivity.this,HomeActivity.class);
         startActivity(intent);
         finish();
     }
     public void checkUserExistence(){
         curUser=mAuth.getCurrentUser();
         if (curUser==null){
-            goToSignUp();
+            goToHomeActivity();
         }
     }
 
