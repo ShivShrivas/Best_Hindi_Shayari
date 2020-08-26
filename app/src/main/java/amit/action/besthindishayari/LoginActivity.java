@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.accounts.NetworkErrorException;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -26,7 +30,7 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private EditText emailField,passField;
+    private TextInputLayout emailField,passField;
     private Button loginBtn;
     private TextView signupLink,forgotPassLink;
     private ProgressDialog mProgress;
@@ -48,7 +52,15 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                verfifyDetails();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+                if (!isNetworkAvailable(getApplicationContext())){
+                    Toast.makeText(LoginActivity.this, "Internet not available", Toast.LENGTH_SHORT).show();
+                }else{
+                    verifyDetails();
+                }
             }
         });
 
@@ -68,14 +80,26 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void verfifyDetails() {
-        String email=emailField.getText().toString().trim();
-        String pass=passField.getText().toString().trim();
+    private void verifyDetails() {
+        String email=emailField.getEditText().getText().toString().trim();
+        String pass=passField.getEditText().getText().toString().trim();
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             emailField.setError("Not a valid email address!");
             emailField.requestFocus();
             return;
+        }else{
+            emailField .clearFocus();
+            emailField.setErrorEnabled(false);
+        }
+
+        if (pass.isEmpty()){
+            passField.setError("Please enter password to login");
+            passField.requestFocus();
+            return;
+        }else{
+            passField.clearFocus();
+            passField.setErrorEnabled(false);
         }
 
         mProgress.setTitle("Logging In");
@@ -95,16 +119,24 @@ public class LoginActivity extends AppCompatActivity {
                     goToMainActivity();
                 }else{
                     if (task.getException() instanceof NetworkErrorException){
+                        mProgress.dismiss();
                         Toast.makeText(LoginActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
                     }else if (task.getException() instanceof FirebaseAuthInvalidUserException){
+                        mProgress.dismiss();
                         Toast.makeText(LoginActivity.this, "No existing account found, please register!", Toast.LENGTH_SHORT).show();
                         //startActivity(new Intent(LoginActivity.this,RegistrationActivity.class));
                     }else{
+                        mProgress.dismiss();
                         Toast.makeText(LoginActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
+    }
+
+    public boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     @Override
