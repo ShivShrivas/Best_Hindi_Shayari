@@ -26,7 +26,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         shayariImage=findViewById(R.id.topic_shayari_image);
 
         topicNameText=new StringBuffer(getIntent().getStringExtra("topic_name"));
-        topicNameText.replace(0,0,Character.toString(topicNameText.charAt(0)).toUpperCase());
+        topicNameText.replace(0,1,Character.toString(topicNameText.charAt(0)).toUpperCase());
         toolbar=findViewById(R.id.topic_shayari_app_bar);
 
         setSupportActionBar(toolbar);
