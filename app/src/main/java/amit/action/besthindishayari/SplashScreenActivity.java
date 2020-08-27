@@ -39,12 +39,15 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent=new Intent(SplashScreenActivity.this,MainActivity.class);
-
+/*
                 Pair[] pairs=new Pair[1];
                 pairs[0]=new Pair<View,String>(appImage,"logo_image");
 
                 ActivityOptions activityOptions=ActivityOptions.makeSceneTransitionAnimation(SplashScreenActivity.this,pairs);
                 startActivity(intent,activityOptions.toBundle());
+                finish();
+                */
+                startActivity(intent);
                 finish();
             }
         },SPLASH_TIMER);

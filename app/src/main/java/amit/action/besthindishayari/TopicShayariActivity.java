@@ -20,7 +20,7 @@ public class TopicShayariActivity extends AppCompatActivity {
     private ImageView shayariImage;
     private Button prevButton,nextButton,moreButton,favButton;
     private Toolbar toolbar;
-    private ArrayList<String> dard;
+    private ArrayList<String> dard,alone,attitude,love,dosti,zindagi,funny,bewafa,sad,judai,good_morning,good_night,birthday,mother,father,new_year,intezaar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         dard =new ArrayList<>();
+
         dard.add("गुलशन की बहारों पे सर-ए-शाम लिखा है,\n" +
                 "फिर उस ने किताबों पे मेरा नाम लिखा है,\n" +
                 "ये दर्द इसी तरह मेरी दुनिया में रहेगा,\n" +
@@ -58,6 +59,44 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "एक दर्द जो दिल में है मरता ही नहीं है।");
         dard.add("दर्द मोहब्बत का ऐ दोस्त बहुत खूब होगा,\n" +
                 "न चुभेगा.. न दिखेगा.. बस महसूस होगा।");
+
+        attitude =new ArrayList<>();
+
+        attitude.add("हक़ से दो तो तुम्हारी नफरत भी कबूल हमें,\n" +
+                "खैरात में तो हम तुम्हारी मोहब्बत भी न लें।");
+
+        attitude.add("सूरज ढला तो कद से ऊँचे हो गए साये,\n" +
+                "कभी पैरों से रौंदी थी यहीं परछाइयां हमने।");
+
+        love =new ArrayList<>();
+        love.add("एक उमर बीत चली है तुझे चाहते हुए,\n" +
+                "तू आज भी बेखबर है कल की तरह।");
+
+        love.add("अना कहती है इल्तेजा क्या करनी,\n" +
+                "वो मोहब्बत ही क्या जो मिन्नतों से मिले।");
+        dosti =new ArrayList<>();
+        dosti.add("आसमान से तोड़ कर सितारा दिया है,\n" +
+                "आलम-ए-तन्हाई में एक शरारा दिया है,\n" +
+                "मेरी किस्मत भी नाज़ करती है मुझपे,\n" +
+                "खुदा ने दोस्त ही इतना प्यारा दिया है।");
+
+        dosti.add("हम जब भी आपकी दुनिया से जायेंगे,\n" +
+                "इतनी खुशियाँ और अपनापन दे जायेंगे,\n" +
+                "कि जब भी याद करोगे इस पागल दोस्त को,\n" +
+                "हँसती आँखों से आँसू निकल आयेंगे।");
+        zindagi =new ArrayList<>();
+        funny =new ArrayList<>();
+        bewafa =new ArrayList<>();
+        sad =new ArrayList<>();
+        judai =new ArrayList<>();
+        good_morning=new ArrayList<>();
+        good_night =new ArrayList<>();
+        birthday =new ArrayList<>();
+        mother =new ArrayList<>();
+        father =new ArrayList<>();
+        new_year =new ArrayList<>();
+        intezaar =new ArrayList<>();
+
 
         ArrayList<String> shayariList = null;
         if(topic.equals("dard")){
