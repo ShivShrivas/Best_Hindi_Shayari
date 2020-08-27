@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToTopicMenu(View view) {
+        //String name=view.getResources().get(view.getId());
         String name_id=view.getResources().getResourceEntryName(view.getId());
         Intent intent=new Intent(MainActivity.this,TopicShayariActivity.class);
         intent.putExtra("topic_name",name_id);

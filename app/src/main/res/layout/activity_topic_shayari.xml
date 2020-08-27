@@ -4,32 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".TopicShayariActivity">
+    android:background="@color/app_background_color"
+    tools:context=".TopicShayariActivity" >
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/berkshire_swash"
-        android:text="Topic wise Shayari's"
-        android:textColor="@color/colorAccent"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/topic_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="------------"
-        android:textColor="#F44336"
-        android:textSize="20sp"
+    <include
+        android:id="@+id/topic_shayari_app_bar"
+        layout="@layout/app_bar_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toTopOf="parent"></include>
+
+    <ImageView
+        android:id="@+id/topic_shayari_image"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="108dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topic_shayari_app_bar"
+        tools:srcCompat="@drawable/dosti" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/topic_shayari_image"
+        app:layout_constraintTop_toBottomOf="@+id/topic_shayari_image">
+
+        <Button
+            android:id="@+id/topic_shayari_prev_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/text_color"
+            android:drawableStart="@drawable/ic_previous_24"
+            android:drawableTint="@color/button_text_color"
+            android:fontFamily="@font/montserrat"
+            android:text="Prev"
+            android:textColor="@color/button_text_color" />
+
+        <Button
+            android:id="@+id/topic_shayari_fav_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/text_color"
+            android:drawableStart="@drawable/ic_favorite_24"
+            android:drawableTint="@color/button_text_color"
+            android:fontFamily="@font/montserrat"
+            android:text="Add to Fav"
+            android:textColor="@color/button_text_color" />
+
+        <Button
+            android:id="@+id/topic_shayari_more_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/text_color"
+            android:drawableStart="@drawable/ic_more_24"
+            android:drawableTint="@color/button_text_color"
+            android:fontFamily="@font/montserrat"
+            android:text="More"
+            android:textColor="@color/button_text_color" />
+
+        <Button
+            android:id="@+id/topic_shayari_next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/text_color"
+            android:drawableEnd="@drawable/ic_next_24"
+            android:drawableTint="@color/button_text_color"
+            android:fontFamily="@font/montserrat"
+            android:text="Next"
+            android:textColor="@color/button_text_color" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

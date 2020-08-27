@@ -7,9 +7,9 @@
             android:icon="@drawable/ic__home_24"
             android:title="Home" />
         <item
-            android:id="@+id/nav_liked"
+            android:id="@+id/nav_fav"
             android:icon="@drawable/ic_star_border_24"
-            android:title="Liked" />
+            android:title="Favourite Shayaries" />
         <item
             android:id="@+id/nav_submit_shayari"
             android:icon="@drawable/ic_submit_24"
@@ -19,6 +19,10 @@
     <item android:title="Profile">
         <menu>
             <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/ic_person_24"
+                    android:title="Login" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_logout_24"
