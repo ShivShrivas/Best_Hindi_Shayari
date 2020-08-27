@@ -95,7 +95,7 @@
         app:srcCompat="@drawable/quote_icon" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/topic_shayari_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
