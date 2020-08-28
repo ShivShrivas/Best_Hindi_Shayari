@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +23,7 @@ public class TopicShayariActivity extends AppCompatActivity {
     private ImageView shayariImage;
     private Button prevButton,nextButton,moreButton,favButton;
     private Toolbar toolbar;
+    private Animation leftAnim,rightAnim;
     private ArrayList<String> dard,alone,attitude,love,dosti,zindagi,funny,bewafa,sad,judai,good_morning,good_night,birthday,mother,father,new_year,intezaar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,10 @@ public class TopicShayariActivity extends AppCompatActivity {
         topic=new String(topicNameText);
         topicNameText.replace(0,1,Character.toString(topicNameText.charAt(0)).toUpperCase());
         toolbar=findViewById(R.id.topic_shayari_app_bar);
+
+        leftAnim= AnimationUtils.loadAnimation(this,R.anim.left_anim);
+        rightAnim= AnimationUtils.loadAnimation(this,R.anim.right_anim);
+        shayariImage.setAnimation(leftAnim);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(topicNameText+" Shayari");
@@ -247,6 +255,8 @@ public class TopicShayariActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                shayariImage.startAnimation(rightAnim);
+                //shayariText.startAnimation(rightAnim);
                 index[0]++;
                 if (index[0] > finalShayariList.size()-1){
                     index[0] =0;
@@ -257,6 +267,8 @@ public class TopicShayariActivity extends AppCompatActivity {
         prevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                shayariImage.startAnimation(leftAnim);
+                //shayariText.startAnimation(leftAnim);
                 index[0]--;
                 if (index[0] <0){
                     index[0] =finalShayariList.size()-1;
@@ -264,6 +276,33 @@ public class TopicShayariActivity extends AppCompatActivity {
                 shayariText.setText(finalShayariList.get(index[0]));
 
             }
+        });
+        shayariImage.setOnTouchListener(new OnSwipeTouchListener(TopicShayariActivity.this){
+            public void onSwipeTop() {
+                Toast.makeText(TopicShayariActivity.this, "top", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeRight() {
+                shayariImage.startAnimation(leftAnim);
+                shayariText.startAnimation(leftAnim);
+                index[0]--;
+                if (index[0] <0){
+                    index[0] =finalShayariList.size()-1;
+                }
+                shayariText.setText(finalShayariList.get(index[0]));
+            }
+            public void onSwipeLeft() {
+                shayariImage.startAnimation(rightAnim);
+                shayariText.startAnimation(rightAnim);
+                index[0]++;
+                if (index[0] > finalShayariList.size()-1){
+                    index[0] =0;
+                }
+                shayariText.setText(finalShayariList.get(index[0]));
+            }
+            public void onSwipeBottom() {
+                Toast.makeText(TopicShayariActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+            }
+
         });
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override

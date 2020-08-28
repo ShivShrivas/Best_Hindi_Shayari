@@ -27,6 +27,7 @@
         app:srcCompat="@drawable/dosti" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/colorLitePrimary"
@@ -53,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/text_color"
-            android:drawableStart="@drawable/ic_favorite_24"
+            android:drawableStart="@drawable/ic_favorite_border_24"
             android:drawableTint="@color/button_text_color"
             android:fontFamily="@font/montserrat"
             android:text="Add to Fav"
@@ -114,5 +115,6 @@
         app:layout_constraintEnd_toEndOf="@+id/topic_shayari_image"
         app:layout_constraintStart_toStartOf="@+id/topic_shayari_image"
         app:layout_constraintTop_toTopOf="@+id/topic_shayari_image" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
