@@ -290,7 +290,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         });
         shayariImage.setOnTouchListener(new OnSwipeTouchListener(TopicShayariActivity.this){
             public void onSwipeTop() {
-                Toast.makeText(TopicShayariActivity.this, "top", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TopicShayariActivity.this, "top", Toast.LENGTH_SHORT).show();
             }
             public void onSwipeRight() {
                 shayariImage.startAnimation(leftAnim);
@@ -313,7 +313,7 @@ public class TopicShayariActivity extends AppCompatActivity {
                 curShayari=finalShayariList.get(index[0]);
             }
             public void onSwipeBottom() {
-                Toast.makeText(TopicShayariActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TopicShayariActivity.this, "bottom", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -357,6 +357,21 @@ public class TopicShayariActivity extends AppCompatActivity {
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(TopicShayariActivity.this, "WhatsApp have not been installed.", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                /*This will be the actual content you wish you share.*/
+                //String shareBody = "Here is the share content body";
+                /*The type of the content is text, obviously.*/
+                intent.setType("text/plain");
+                /*Applying information Subject and Body.*/
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shayari Share");
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, curShayari);
+                /*Fire!*/
+                startActivity(Intent.createChooser(intent, "Share Using"));
             }
         });
 
