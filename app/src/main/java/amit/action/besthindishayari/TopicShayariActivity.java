@@ -5,18 +5,26 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 
@@ -27,6 +35,7 @@ public class TopicShayariActivity extends AppCompatActivity {
     private ImageView shayariImage;
     private Button prevButton,nextButton,moreButton,favButton,whatsAppShareButton,copyButton,shareButton;
     private Toolbar toolbar;
+    private RelativeLayout relativeLayout;
     private Animation leftAnim,rightAnim;
     private ArrayList<String> dard,alone,attitude,love,dosti,zindagi,funny,bewafa,sad,judai,good_morning,good_night,birthday,mother,father,new_year,intezaar;
     @Override
@@ -43,6 +52,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         whatsAppShareButton=findViewById(R.id.topi_shayari_whatsapp_share);
         copyButton=findViewById(R.id.topic_shayari_copy_text);
         shareButton=findViewById(R.id.topic_shayari_share);
+        relativeLayout=findViewById(R.id.topic_relative_layout);
 
         topicNameText=new StringBuffer(getIntent().getStringExtra("topic_name"));
         topic=new String(topicNameText);
@@ -57,6 +67,13 @@ public class TopicShayariActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(topicNameText+" Shayari");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        shayariImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToEditActivity();
+            }
+        });
 
 
         alone =new ArrayList<>();
@@ -330,7 +347,9 @@ public class TopicShayariActivity extends AppCompatActivity {
 
             }
         });
+
         shayariImage.setOnTouchListener(new OnSwipeTouchListener(TopicShayariActivity.this){
+
             public void onSwipeTop() {
                 //Toast.makeText(TopicShayariActivity.this, "top", Toast.LENGTH_SHORT).show();
             }
@@ -368,14 +387,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent();
-                Toast.makeText(TopicShayariActivity.this, "Jald aa raha :-)", Toast.LENGTH_SHORT).show();
-            }
-        });
-        shayariImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(TopicShayariActivity.this, "Ye bhi jald aa raha :-)", Toast.LENGTH_SHORT).show();
+                goToEditActivity();
             }
         });
         copyButton.setOnClickListener(new View.OnClickListener() {
@@ -391,6 +403,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         whatsAppShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
                 whatsappIntent.setType("text/plain");
                 whatsappIntent.setPackage("com.whatsapp");
@@ -400,23 +413,97 @@ public class TopicShayariActivity extends AppCompatActivity {
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(TopicShayariActivity.this, "WhatsApp have not been installed.", Toast.LENGTH_SHORT).show();
                 }
+                */
+
+                Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
+                        Bitmap.Config.ARGB_8888);
+                Canvas canvas=new Canvas(bitmap);
+                relativeLayout.draw(canvas);
+
+                Bitmap icon = bitmap;
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("image/png");
+                share.setPackage("com.whatsapp");
+
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+                values.put(MediaStore.Images.Media.TITLE, "Your Shayari");
+                values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+                //MediaStore.Images.Media.insertImage(getContentResolver(), icon, topic+" shayari", "yourDescription");
+                Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        values);
+
+
+                OutputStream outstream;
+                try {
+                    outstream = getContentResolver().openOutputStream(uri);
+                    icon.compress(Bitmap.CompressFormat.PNG, 100, outstream);
+                    outstream.close();
+                } catch (Exception e) {
+                    System.err.println(e.toString());
+                    Toast.makeText(TopicShayariActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+                share.putExtra(Intent.EXTRA_STREAM, uri);
+                try {
+                    startActivity(share);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(TopicShayariActivity.this, "WhatsApp have not been installed.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                /*This will be the actual content you wish you share.*/
+                *//*This will be the actual content you wish you share.*//*
                 //String shareBody = "Here is the share content body";
-                /*The type of the content is text, obviously.*/
+                *//*The type of the content is text, obviously.*//*
                 intent.setType("text/plain");
-                /*Applying information Subject and Body.*/
+                *//*Applying information Subject and Body.*//*
                 intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shayari Share");
                 intent.putExtra(android.content.Intent.EXTRA_TEXT, curShayari);
-                /*Fire!*/
+                *//*Fire!*//*
                 startActivity(Intent.createChooser(intent, "Share Using"));
+                */
+
+                share();
             }
         });
+
+    }
+    private void share(){
+        Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas=new Canvas(bitmap);
+        relativeLayout.draw(canvas);
+
+        Bitmap icon = bitmap;
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("image/png");
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        values.put(MediaStore.Images.Media.TITLE, "Your Shayari");
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+        //MediaStore.Images.Media.insertImage(getContentResolver(), icon, topic+" shayari", "yourDescription");
+        Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                values);
+
+
+        OutputStream outstream;
+        try {
+            outstream = getContentResolver().openOutputStream(uri);
+            icon.compress(Bitmap.CompressFormat.PNG, 100, outstream);
+            outstream.close();
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
+
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(share, "Share Image using:"));
 
     }
 
@@ -424,5 +511,12 @@ public class TopicShayariActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+    public void goToEditActivity(){
+        Intent intent=new Intent(TopicShayariActivity.this,EditActivity.class);
+        intent.putExtra("cur_shayari",curShayari);
+        intent.putExtra("topic",topic);
+        startActivity(intent);
+        //Toast.makeText(TopicShayariActivity.this, "Jald aa raha :-)", Toast.LENGTH_SHORT).show();
     }
 }
