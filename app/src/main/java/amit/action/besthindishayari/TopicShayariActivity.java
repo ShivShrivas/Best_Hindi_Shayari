@@ -1,20 +1,24 @@
 package amit.action.besthindishayari;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.DragEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -24,20 +28,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 
 public class TopicShayariActivity extends AppCompatActivity {
+    private static final int PERMISSION_REQUEST_CODE = 200;
     private StringBuffer topicNameText;
     private String topic,curShayari;
-    private TextView shayariText;
+    private TextView shayariText,watermark;
     private ImageView shayariImage;
     private Button prevButton,nextButton,moreButton,favButton,whatsAppShareButton,copyButton,shareButton;
     private Toolbar toolbar;
     private RelativeLayout relativeLayout;
     private Animation leftAnim,rightAnim;
     private ArrayList<String> dard,alone,attitude,love,dosti,zindagi,funny,bewafa,sad,judai,good_morning,good_night,birthday,mother,father,new_year,intezaar;
+    View v;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +64,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         copyButton=findViewById(R.id.topic_shayari_copy_text);
         shareButton=findViewById(R.id.topic_shayari_share);
         relativeLayout=findViewById(R.id.topic_relative_layout);
+        watermark=findViewById(R.id.topic_shayari_watermark);
 
         topicNameText=new StringBuffer(getIntent().getStringExtra("topic_name"));
         topic=new String(topicNameText);
@@ -414,48 +426,62 @@ public class TopicShayariActivity extends AppCompatActivity {
                     Toast.makeText(TopicShayariActivity.this, "WhatsApp have not been installed.", Toast.LENGTH_SHORT).show();
                 }
                 */
+                //watermark.setVisibility(View.VISIBLE);
 
-                Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
-                        Bitmap.Config.ARGB_8888);
-                Canvas canvas=new Canvas(bitmap);
-                relativeLayout.draw(canvas);
+                if (checkPermission()) {
+                    //share();
+                    //Snackbar.make(v, "Permission already granted.", Snackbar.LENGTH_LONG).show();
 
-                Bitmap icon = bitmap;
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("image/png");
-                share.setPackage("com.whatsapp");
+                    Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
+                            Bitmap.Config.ARGB_8888);
+                    Canvas canvas=new Canvas(bitmap);
+                    relativeLayout.draw(canvas);
 
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-                values.put(MediaStore.Images.Media.TITLE, "Your Shayari");
-                values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
-                //MediaStore.Images.Media.insertImage(getContentResolver(), icon, topic+" shayari", "yourDescription");
-                Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        values);
+                    Bitmap icon = bitmap;
+                    Intent share = new Intent(Intent.ACTION_SEND);
+                    share.setType("image/png");
+                    share.setPackage("com.whatsapp");
+
+                    ContentValues values = new ContentValues();
+                    values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+                    values.put(MediaStore.Images.Media.TITLE, "Your Shayari");
+                    values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+                    //MediaStore.Images.Media.insertImage(getContentResolver(), icon, topic+" shayari", "yourDescription");
+                    Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            values);
 
 
-                OutputStream outstream;
-                try {
-                    outstream = getContentResolver().openOutputStream(uri);
-                    icon.compress(Bitmap.CompressFormat.PNG, 100, outstream);
-                    outstream.close();
-                } catch (Exception e) {
-                    System.err.println(e.toString());
-                    Toast.makeText(TopicShayariActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                    OutputStream outstream;
+                    try {
+                        outstream = getContentResolver().openOutputStream(uri);
+                        icon.compress(Bitmap.CompressFormat.PNG, 100, outstream);
+                        outstream.close();
+                    } catch (Exception e) {
+                        System.err.println(e.toString());
+                        Toast.makeText(TopicShayariActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    share.putExtra(Intent.EXTRA_STREAM, uri);
+                    try {
+                        startActivity(share);
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(TopicShayariActivity.this, "WhatsApp have not been installed.", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    requestPermission();
+                    //Snackbar.make(v, "Please request permission.", Snackbar.LENGTH_LONG).show();
                 }
 
-                share.putExtra(Intent.EXTRA_STREAM, uri);
-                try {
-                    startActivity(share);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(TopicShayariActivity.this, "WhatsApp have not been installed.", Toast.LENGTH_SHORT).show();
-                }
+
+                //watermark.setVisibility(View.GONE);
 
             }
         });
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                v=view;
                 /*
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 *//*This will be the actual content you wish you share.*//*
@@ -468,12 +494,79 @@ public class TopicShayariActivity extends AppCompatActivity {
                 *//*Fire!*//*
                 startActivity(Intent.createChooser(intent, "Share Using"));
                 */
+                if (checkPermission()) {
+                    share();
+                    Snackbar.make(v, "Permission already granted.", Snackbar.LENGTH_LONG).show();
 
-                share();
+                } else {
+                    requestPermission();
+                    Snackbar.make(v, "Please request permission.", Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
     }
+
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
+        //int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
+
+        return result == PackageManager.PERMISSION_GRANTED /*&& result1 == PackageManager.PERMISSION_GRANTED */;
+    }
+
+    private void requestPermission() {
+
+        ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0) {
+
+                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    //boolean cameraAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                    if (locationAccepted /*&& cameraAccepted*/)
+                        Snackbar.make(v, "Permission Granted, Now you can access location data and camera.", Snackbar.LENGTH_LONG).show();
+                    else {
+
+                        Snackbar.make(v, "Permission Denied, You cannot access location data and camera.", Snackbar.LENGTH_LONG).show();
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) {
+                                showMessageOKCancel("You need to allow access to storage permissions",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                    requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE},
+                                                            PERMISSION_REQUEST_CODE);
+                                                }
+                                            }
+                                        });
+                                return;
+                            }
+                        }
+
+                    }
+                }
+
+
+                break;
+        }
+    }
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(TopicShayariActivity.this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
     private void share(){
         Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
                 Bitmap.Config.ARGB_8888);
