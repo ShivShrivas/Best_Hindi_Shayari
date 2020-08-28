@@ -3,6 +3,10 @@ package amit.action.besthindishayari;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.View;
@@ -18,10 +22,10 @@ import java.util.ArrayList;
 
 public class TopicShayariActivity extends AppCompatActivity {
     private StringBuffer topicNameText;
-    private String topic;
+    private String topic,curShayari;
     private TextView shayariText;
     private ImageView shayariImage;
-    private Button prevButton,nextButton,moreButton,favButton;
+    private Button prevButton,nextButton,moreButton,favButton,whatsAppShareButton,copyButton,shareButton;
     private Toolbar toolbar;
     private Animation leftAnim,rightAnim;
     private ArrayList<String> dard,alone,attitude,love,dosti,zindagi,funny,bewafa,sad,judai,good_morning,good_night,birthday,mother,father,new_year,intezaar;
@@ -36,6 +40,9 @@ public class TopicShayariActivity extends AppCompatActivity {
         moreButton=findViewById(R.id.topic_shayari_more_button);
         shayariImage=findViewById(R.id.topic_shayari_image);
         shayariText=findViewById(R.id.topic_shayari_text);
+        whatsAppShareButton=findViewById(R.id.topi_shayari_whatsapp_share);
+        copyButton=findViewById(R.id.topic_shayari_copy_text);
+        shareButton=findViewById(R.id.topic_shayari_share);
 
         topicNameText=new StringBuffer(getIntent().getStringExtra("topic_name"));
         topic=new String(topicNameText);
@@ -50,6 +57,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(topicNameText+" Shayari");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         alone =new ArrayList<>();
         dard =new ArrayList<>();
@@ -251,6 +259,7 @@ public class TopicShayariActivity extends AppCompatActivity {
 
         final int[] index = {0};
         shayariText.setText(shayariList.get(index[0]));
+        curShayari=shayariList.get(index[0]);
         final ArrayList<String> finalShayariList = shayariList;
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,6 +271,7 @@ public class TopicShayariActivity extends AppCompatActivity {
                     index[0] =0;
                 }
                 shayariText.setText(finalShayariList.get(index[0]));
+                curShayari=finalShayariList.get(index[0]);
             }
         });
         prevButton.setOnClickListener(new View.OnClickListener() {
@@ -274,6 +284,7 @@ public class TopicShayariActivity extends AppCompatActivity {
                     index[0] =finalShayariList.size()-1;
                 }
                 shayariText.setText(finalShayariList.get(index[0]));
+                curShayari=finalShayariList.get(index[0]);
 
             }
         });
@@ -289,6 +300,7 @@ public class TopicShayariActivity extends AppCompatActivity {
                     index[0] =finalShayariList.size()-1;
                 }
                 shayariText.setText(finalShayariList.get(index[0]));
+                curShayari=finalShayariList.get(index[0]);
             }
             public void onSwipeLeft() {
                 shayariImage.startAnimation(rightAnim);
@@ -298,6 +310,7 @@ public class TopicShayariActivity extends AppCompatActivity {
                     index[0] =0;
                 }
                 shayariText.setText(finalShayariList.get(index[0]));
+                curShayari=finalShayariList.get(index[0]);
             }
             public void onSwipeBottom() {
                 Toast.makeText(TopicShayariActivity.this, "bottom", Toast.LENGTH_SHORT).show();
