@@ -335,6 +335,15 @@ public class TopicShayariActivity extends AppCompatActivity {
                 Toast.makeText(TopicShayariActivity.this, "Ye bhi jald aa raha :-)", Toast.LENGTH_SHORT).show();
             }
         });
+        copyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Shayari",curShayari);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(TopicShayariActivity.this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
