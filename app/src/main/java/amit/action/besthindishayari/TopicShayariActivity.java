@@ -368,6 +368,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent=new Intent();
                 Toast.makeText(TopicShayariActivity.this, "Jald aa raha :-)", Toast.LENGTH_SHORT).show();
             }
         });
