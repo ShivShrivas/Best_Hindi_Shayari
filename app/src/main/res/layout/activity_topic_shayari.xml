@@ -156,7 +156,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/text_color"
-            android:drawableStart="@drawable/whatsapp_icon" />
+            android:drawableStart="@drawable/whatsapp_icon"
+            android:text="W Share"
+            android:textAllCaps="false"
+            android:textColor="@color/button_text_color" />
 
         <Button
             android:id="@+id/topic_shayari_share"
@@ -164,7 +167,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/text_color"
-            android:drawableStart="@drawable/share_icon" />
+            android:drawableStart="@drawable/share_icon"
+            android:text="Share"
+            android:textAllCaps="false"
+            android:textColor="@color/button_text_color" />
 
         <Button
             android:id="@+id/topic_shayari_copy_text"
@@ -173,7 +179,10 @@
             android:layout_weight="1"
             android:backgroundTint="@color/text_color"
             android:drawableStart="@drawable/ic_copy_24dp"
-            android:drawableTint="#FFFFFF" />
+            android:drawableTint="#FFFFFF"
+            android:text="Copy text"
+            android:textAllCaps="false"
+            android:textColor="@color/button_text_color" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

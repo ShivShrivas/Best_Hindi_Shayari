@@ -360,6 +360,13 @@ public class TopicShayariActivity extends AppCompatActivity {
             }
         });
 
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToEditActivity();
+            }
+        });
+
         shayariImage.setOnTouchListener(new OnSwipeTouchListener(TopicShayariActivity.this){
 
             public void onSwipeTop() {
@@ -415,6 +422,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         whatsAppShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                v=view;
                 /*
                 Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
                 whatsappIntent.setType("text/plain");
@@ -429,9 +437,6 @@ public class TopicShayariActivity extends AppCompatActivity {
                 //watermark.setVisibility(View.VISIBLE);
 
                 if (checkPermission()) {
-                    //share();
-                    //Snackbar.make(v, "Permission already granted.", Snackbar.LENGTH_LONG).show();
-
                     Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
                             Bitmap.Config.ARGB_8888);
                     Canvas canvas=new Canvas(bitmap);
@@ -470,7 +475,6 @@ public class TopicShayariActivity extends AppCompatActivity {
 
                 } else {
                     requestPermission();
-                    //Snackbar.make(v, "Please request permission.", Snackbar.LENGTH_LONG).show();
                 }
 
 
@@ -496,11 +500,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 */
                 if (checkPermission()) {
                     share();
-                    Snackbar.make(v, "Permission already granted.", Snackbar.LENGTH_LONG).show();
 
                 } else {
                     requestPermission();
-                    Snackbar.make(v, "Please request permission.", Snackbar.LENGTH_LONG).show();
                 }
             }
         });
@@ -526,14 +528,14 @@ public class TopicShayariActivity extends AppCompatActivity {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0) {
 
-                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     //boolean cameraAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
-                    if (locationAccepted /*&& cameraAccepted*/)
-                        Snackbar.make(v, "Permission Granted, Now you can access location data and camera.", Snackbar.LENGTH_LONG).show();
+                    if (storageAccepted /*&& cameraAccepted*/)
+                        Snackbar.make(v, "Permission Granted, Now you can access internal storage.", Snackbar.LENGTH_LONG).show();
                     else {
 
-                        Snackbar.make(v, "Permission Denied, You cannot access location data and camera.", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(v, "Permission Denied, You cannot access internal storage.", Snackbar.LENGTH_LONG).show();
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) {
