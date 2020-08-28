@@ -756,7 +756,7 @@
                             android:layout_height="match_parent">
 
                             <ImageView
-                                android:id="@+id/intezar"
+                                android:id="@+id/intezaar"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:onClick="goToTopicMenu"

@@ -43,6 +43,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        alone =new ArrayList<>();
         dard =new ArrayList<>();
         dard.add("गुलशन की बहारों पे सर-ए-शाम लिखा है,\n" +
                 "फिर उस ने किताबों पे मेरा नाम लिखा है,\n" +
@@ -96,9 +97,7 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "पर सबसे सुखी वही होता है,\n" +
                 "जो शाम को दो पैग मार के सोता है।");
         funny.add("उसी दिन से व्हाट्सएप्प से नफरत हो गयी ग़ालिब,\n" +
-                "जब बाल कटवाने के लिए एडमिन ने चंदा माँग लिया।\n" +
-                "\n" +
-                "Whatsapp Group Admin Funny Shayari Hindi");
+                "जब बाल कटवाने के लिए एडमिन ने चंदा माँग लिया।\n");
 
         bewafa =new ArrayList<>();
         bewafa.add("अब के अब तस्लीम कर लें तू नहीं तो मैं सही,\n" +
@@ -189,9 +188,57 @@ public class TopicShayariActivity extends AppCompatActivity {
 
 
         ArrayList<String> shayariList = null;
-        if(topic.equals("dard")){
+        if(topic.equals("alone")){
+            shayariList=alone;
+            shayariImage.setImageResource(R.drawable.alone);
+        }else if(topic.equals("attitude")){
+            shayariList=attitude;
+            shayariImage.setImageResource(R.drawable.attitude);
+        }else if(topic.equals("love")){
+            shayariList=love;
+            shayariImage.setImageResource(R.drawable.love);
+        }else if(topic.equals("dosti")){
+            shayariList=dosti;
+            shayariImage.setImageResource(R.drawable.dosti);
+        }else if(topic.equals("zindagi")){
+            shayariList=zindagi;
+            shayariImage.setImageResource(R.drawable.zindagi);
+        }else if(topic.equals("funny")){
+            shayariList=funny;
+            shayariImage.setImageResource(R.drawable.funny);
+        }else if(topic.equals("bewafa")){
+            shayariList=bewafa;
+            shayariImage.setImageResource(R.drawable.bewafa);
+        }else if(topic.equals("sad")){
+            shayariList=sad;
+            shayariImage.setImageResource(R.drawable.sad);
+        }else if(topic.equals("judai")){
+            shayariList=judai;
+            shayariImage.setImageResource(R.drawable.judai);
+        }else if(topic.equals("dard")){
             shayariList=dard;
             shayariImage.setImageResource(R.drawable.dard);
+        }else if(topic.equals("good_morning")){
+            shayariList=good_morning;
+            shayariImage.setImageResource(R.drawable.good_morning);
+        }else if(topic.equals("good_night")){
+            shayariList=good_night;
+            shayariImage.setImageResource(R.drawable.good_night);
+        }else if(topic.equals("birthday")){
+            shayariList=birthday;
+            shayariImage.setImageResource(R.drawable.birthday);
+        }else if(topic.equals("mother")){
+            shayariList=mother;
+            shayariImage.setImageResource(R.drawable.mother);
+        }else if(topic.equals("father")){
+            shayariList=father;
+            shayariImage.setImageResource(R.drawable.father);
+        }else if(topic.equals("new_year")){
+            shayariList=new_year;
+            shayariImage.setImageResource(R.drawable.new_year);
+        }else if(topic.equals("intezaar")){
+            shayariList=intezaar;
+            shayariImage.setImageResource(R.drawable.intezaar);
         }
 
         final int[] index = {0};
