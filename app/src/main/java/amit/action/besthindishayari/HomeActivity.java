@@ -53,4 +53,10 @@ public class HomeActivity extends AppCompatActivity {
             },1000); //one second
         }
     }
+
+    public void goToMainActivity(View view) {
+        Intent intent=new Intent(HomeActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
