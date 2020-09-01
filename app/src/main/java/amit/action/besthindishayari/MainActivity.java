@@ -139,6 +139,10 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
 
+            case R.id.nav_fav:
+                Intent intent=new Intent(MainActivity.this,FavouriteShayariActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
