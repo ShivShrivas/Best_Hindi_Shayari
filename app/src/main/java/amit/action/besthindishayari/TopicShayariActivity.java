@@ -741,7 +741,7 @@ public class TopicShayariActivity extends AppCompatActivity {
 
         dosti =new ArrayList<>();
         dosti.add("आसमान से तोड़ कर सितारा दिया है,\n" +
-                "आलम-ए-तन्हाई में एक शरारा दिया है,\n" +
+                "आलम-ए-तन्हाई में एक सहारा दिया है,\n" +
                 "मेरी किस्मत भी नाज़ करती है मुझपे,\n" +
                 "खुदा ने दोस्त ही इतना प्यारा दिया है।");
 
