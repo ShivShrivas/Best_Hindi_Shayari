@@ -67,7 +67,7 @@
         android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="18sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/favourite_shayari_app_bar" />

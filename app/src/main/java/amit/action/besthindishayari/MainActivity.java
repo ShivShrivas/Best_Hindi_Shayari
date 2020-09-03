@@ -96,17 +96,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        List<String> list=new ArrayList<>();
-        list.add("Alone");
-        list.add("Sad");
-        list.add("Love");
-        list.add("Dosti");
-        list.add("Dard");
-        list.add("Good Morning");
-        list.add("Good Night");
-        list.add("Zindagi");
-
-
     }
 
     private void UserMenuSelector(MenuItem menuItem) {
@@ -172,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        checkUserExistence();
+        //checkUserExistence();
         //Snackbar snackbar=Snackbar.make(drawerLayout,"Welcome "+curUser.getDisplayName(),Snackbar.LENGTH_LONG);
         //snackbar.show();
     }

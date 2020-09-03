@@ -121,7 +121,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
 
-        if (!name.matches("[A-Z][a-z]*") || name.isEmpty() || name.length()<4){
+        if (!name.matches("^[\\p{L} .'-]+$") || name.isEmpty() || name.length()<4){
             nameField.setError("Not a valid name!");
             nameField.requestFocus();
             return;
