@@ -132,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(MainActivity.this,FavouriteShayariActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_submit_shayari:
+                Intent subIntent=new Intent(MainActivity.this,SubmitShayariActivity.class);
+                startActivity(subIntent);
+                break;
         }
     }
 
