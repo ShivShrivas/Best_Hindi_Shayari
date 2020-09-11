@@ -1,11 +1,13 @@
 package amit.action.besthindishayari;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentValues;
@@ -28,25 +30,42 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 
 public class TopicShayariActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mRef;
     private StringBuffer topicNameText;
-    private String topic,curShayari;
-    private TextView shayariText,watermark;
+    private String topic, curShayari;
+    private int curIndex = 0;
+    private boolean isCurShayariFav = false;
+    private String uniqueText = "";
+    private TextView shayariText, watermark;
     private ImageView shayariImage;
-    private Button prevButton,nextButton,moreButton,favButton,whatsAppShareButton,copyButton,shareButton;
+    private Button prevButton, nextButton, moreButton, favButton, whatsAppShareButton, copyButton, shareButton;
     private Toolbar toolbar;
+    private ProgressDialog mProgress;
     private RelativeLayout relativeLayout;
-    private Animation leftAnim,rightAnim;
-    private ArrayList<String> dard,alone,attitude,love,dosti,zindagi,funny,bewafa,sad,judai,good_morning,good_night,birthday,mother,father,new_year,intezaar;
+    private Animation leftAnim, rightAnim;
+    private ArrayList<String> dard, alone, attitude, love, dosti, zindagi, funny, bewafa, sad, judai, good_morning, good_night, birthday, mother, father, new_year, intezaar, legend;
     View v;
 
     @Override
@@ -54,29 +73,33 @@ public class TopicShayariActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_shayari);
 
-        prevButton=findViewById(R.id.topic_shayari_prev_button);
-        nextButton=findViewById(R.id.topic_shayari_next_button);
-        favButton=findViewById(R.id.topic_shayari_fav_button);
-        moreButton=findViewById(R.id.topic_shayari_more_button);
-        shayariImage=findViewById(R.id.topic_shayari_image);
-        shayariText=findViewById(R.id.topic_shayari_text);
-        whatsAppShareButton=findViewById(R.id.topi_shayari_whatsapp_share);
-        copyButton=findViewById(R.id.topic_shayari_copy_text);
-        shareButton=findViewById(R.id.topic_shayari_share);
-        relativeLayout=findViewById(R.id.topic_relative_layout);
-        watermark=findViewById(R.id.topic_shayari_watermark);
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
+        mProgress = new ProgressDialog(this);
 
-        topicNameText=new StringBuffer(getIntent().getStringExtra("topic_name"));
-        topic=new String(topicNameText);
-        topicNameText.replace(0,1,Character.toString(topicNameText.charAt(0)).toUpperCase());
-        toolbar=findViewById(R.id.topic_shayari_app_bar);
+        prevButton = findViewById(R.id.topic_shayari_prev_button);
+        nextButton = findViewById(R.id.topic_shayari_next_button);
+        favButton = findViewById(R.id.topic_shayari_fav_button);
+        moreButton = findViewById(R.id.topic_shayari_more_button);
+        shayariImage = findViewById(R.id.topic_shayari_image);
+        shayariText = findViewById(R.id.topic_shayari_text);
+        whatsAppShareButton = findViewById(R.id.topi_shayari_whatsapp_share);
+        copyButton = findViewById(R.id.topic_shayari_copy_text);
+        shareButton = findViewById(R.id.topic_shayari_share);
+        relativeLayout = findViewById(R.id.topic_relative_layout);
+        watermark = findViewById(R.id.topic_shayari_watermark);
 
-        leftAnim= AnimationUtils.loadAnimation(this,R.anim.left_anim);
-        rightAnim= AnimationUtils.loadAnimation(this,R.anim.right_anim);
+        topicNameText = new StringBuffer(getIntent().getStringExtra("topic_name"));
+        topic = new String(topicNameText);
+        topicNameText.replace(0, 1, Character.toString(topicNameText.charAt(0)).toUpperCase());
+        toolbar = findViewById(R.id.topic_shayari_app_bar);
+
+        leftAnim = AnimationUtils.loadAnimation(this, R.anim.left_anim);
+        rightAnim = AnimationUtils.loadAnimation(this, R.anim.right_anim);
         shayariImage.setAnimation(leftAnim);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(topicNameText+" Shayari");
+        getSupportActionBar().setTitle(topicNameText + " Shayari");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -88,7 +111,22 @@ public class TopicShayariActivity extends AppCompatActivity {
         });
 
 
-        alone =new ArrayList<>();
+        legend = new ArrayList<>();
+        legend.add("Abhi AA raha hai");
+        legend.add("");
+        legend.add("");
+        legend.add("");
+        legend.add("");
+        legend.add("");
+        legend.add("");
+        legend.add("");
+        legend.add("");
+        legend.add("");
+        legend.add("");
+        legend.add("");
+        legend.add("");
+
+        alone = new ArrayList<>();
         //2nd page.
 
         alone.add("कितनी अजीब है इस शहर की तन्हाई भी,\n" +
@@ -193,10 +231,10 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "दुनिया की वही रौनक दिल की वही तन्हाई।");
         alone.add("तेरे जल्वों ने मुझे घेर लिया है ऐ दोस्त,\n" +
                 "अब तो तन्हाई के लम्हे भी हसीं लगते हैं।");
-        System.out.println("Alone "+alone.size());
+        System.out.println("Alone " + alone.size());
 
 
-        dard =new ArrayList<>();
+        dard = new ArrayList<>();
         dard.add("भीड़ में भी तन्हा रहना मुझको सिखा दिया,\n" +
                 "तेरी मोहब्बत ने दुनिया को झूठा कहना सिखा दिया,\n" +
                 "किसी दर्द या ख़ुशी का एहसास नहीं है अब तो,\n" +
@@ -318,9 +356,9 @@ public class TopicShayariActivity extends AppCompatActivity {
         dard.add("शायरी में कहाँ सिमटता है दर्द-ए-दिल दोस्तो,\n" +
                 "बहला रहे हैं खुद को जरा कागजों के साथ।");
 
-        System.out.println("Dard "+dard.size());
+        System.out.println("Dard " + dard.size());
 
-        attitude =new ArrayList<>();
+        attitude = new ArrayList<>();
         attitude.add("Attitude तो अपना भी खानदानी है,और तू मेरे दिल की रानी है, इसलिये कह रहा हूँ मान जा, क्योंकि अपनी तो करोड़ो दीवानी हैं।");
         attitude.add("मेरा वाला थोड़ा लेट आयेगा, लेकिन जब आयेगा तो लाखो में एक आयेगा।");
         attitude.add("किरदार में मेरी भले ही अदाकारियां नही है, खुद्दारी है, Attitude है, पर मक्कारियां नही है।");
@@ -599,9 +637,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "खैरात में तो हम तुम्हारी मोहब्बत भी न लें।");
         attitude.add("सूरज ढला तो कद से ऊँचे हो गए साये,\n" +
                 "कभी पैरों से रौंदी थी यहीं परछाइयां हमने।");
-        System.out.println("Attitude "+attitude.size());
+        System.out.println("Attitude " + attitude.size());
 
-        love =new ArrayList<>();
+        love = new ArrayList<>();
         //https://bestnow.in/love-shayari-hindi/20/
         love.add("एक उमर बीत चली है तुझे चाहते हुए,\n" +
                 "तू आज भी बेखबर है कल की तरह।");
@@ -810,9 +848,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "खुदा आपको लम्बी उम्र दे जीने के लिए,\n" +
                 "अगर एक पल भी कम पड़े तो मेरी\n" +
                 "मेरी जिंदगी मांग लेना।");
-        System.out.println("Love "+love.size());
+        System.out.println("Love " + love.size());
 
-        dosti =new ArrayList<>();
+        dosti = new ArrayList<>();
         dosti.add("आसमान से तोड़ कर सितारा दिया है,\n" +
                 "आलम-ए-तन्हाई में एक सहारा दिया है,\n" +
                 "मेरी किस्मत भी नाज़ करती है मुझपे,\n" +
@@ -978,10 +1016,10 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "किसी अपने का ज़िंदगी भर का साथ है,\n" +
                 "ये तो दिलों का वो खूबसूरत एहसास है,\n" +
                 "जिसके दम से रौशन ये सारी कायनात है।");
-        System.out.println("Dosti "+dosti.size());
+        System.out.println("Dosti " + dosti.size());
 
 
-        zindagi =new ArrayList<>();
+        zindagi = new ArrayList<>();
         zindagi.add("सबके लबो पर एक दिन तेरा ही नाम होगा,\n" +
                 "हर कदम पे तेरे, दुनिया का सलाम होगा,\n" +
                 "हर मुसीबत का सामना करना तू डट कर,\n" +
@@ -1367,9 +1405,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "कुछ क़र्ज़ चुकाने बाकी हैं,\n" +
                 "कुछ दर्द मिटाने बाकी हैं\n" +
                 "कुछ फ़र्ज़ निभाने बाकी हैं।");
-        System.out.println("Zindagi "+zindagi.size());
+        System.out.println("Zindagi " + zindagi.size());
 
-        funny =new ArrayList<>();
+        funny = new ArrayList<>();
         funny.add("इस दुनिया में लाखों लोग रहते हैं,\n" +
                 "कोई हँसता है तो कोई रोता है,\n" +
                 "पर सबसे सुखी वही होता है,\n" +
@@ -1422,9 +1460,9 @@ public class TopicShayariActivity extends AppCompatActivity {
         funny.add("");
         funny.add("");
         funny.add("");
-        System.out.println("Funny "+funny.size());
+        System.out.println("Funny " + funny.size());
 
-        bewafa =new ArrayList<>();
+        bewafa = new ArrayList<>();
         bewafa.add("अब के अब तस्लीम कर लें तू नहीं तो मैं सही,\n" +
                 "कौन मानेगा कि हम में से बेवफा कोई नहीं।");
         bewafa.add("मेरे फन को तराशा है सभी के नेक इरादों ने,\n" +
@@ -1479,9 +1517,9 @@ public class TopicShayariActivity extends AppCompatActivity {
         bewafa.add("");
         bewafa.add("");
         bewafa.add("");
-        System.out.println("Bewafa "+bewafa.size());
+        System.out.println("Bewafa " + bewafa.size());
 
-        sad =new ArrayList<>();
+        sad = new ArrayList<>();
         sad.add("जिसके नसीब मे हों ज़माने की ठोकरें,\n" +
                 "उस बदनसीब से ना सहारों की बात कर।");
         sad.add("बुला रहा है कौन मुझको उस तरफ,\n" +
@@ -1542,10 +1580,10 @@ public class TopicShayariActivity extends AppCompatActivity {
         sad.add("");
         sad.add("");
         sad.add("");
-        System.out.println("Sad "+sad.size());
+        System.out.println("Sad " + sad.size());
 
 
-        judai =new ArrayList<>();
+        judai = new ArrayList<>();
         judai.add("दिल से निकली ही नहीं शाम जुदाई वाली,\n" +
                 "तुम तो कहते थे बुरा वक़्त गुज़र जाता है।");
         judai.add("जुदा हुए हैं बहुत से लोग एक तुम भी सही,\n" +
@@ -1600,9 +1638,9 @@ public class TopicShayariActivity extends AppCompatActivity {
         judai.add("");
         judai.add("");
         judai.add("");
-        System.out.println("Judai "+judai.size());
+        System.out.println("Judai " + judai.size());
 
-        good_morning=new ArrayList<>();
+        good_morning = new ArrayList<>();
         good_morning.add("सुबह होते ही जब दुनिया आबाद होती है,\n" +
                 "आँख खुलते ही दिल में आपकी याद होती है,\n" +
                 "खुशियों के फूल हों आपके आँचल में,\n" +
@@ -1652,9 +1690,9 @@ public class TopicShayariActivity extends AppCompatActivity {
         good_morning.add("");
         good_morning.add("");
         good_morning.add("");
-        System.out.println("Good Morning "+good_morning.size());
+        System.out.println("Good Morning " + good_morning.size());
 
-        good_night =new ArrayList<>();
+        good_night = new ArrayList<>();
         good_night.add("ऐसा लगता है कुछ होने जा रहा है,\n" +
                 "कोई मीठे सपनों में खोने जा रहा है,\n" +
                 "धीमी कर दे अपनी रोशनी ऐ चाँद,\n" +
@@ -1708,9 +1746,9 @@ public class TopicShayariActivity extends AppCompatActivity {
         good_night.add("");
         good_night.add("");
         good_night.add("");
-        System.out.println("Good Night "+good_night.size());
+        System.out.println("Good Night " + good_night.size());
 
-        birthday =new ArrayList<>();
+        birthday = new ArrayList<>();
         birthday.add("आपके जन्मदिन पर हम देते हैं ये दुआ,\n" +
                 "खुशियाँ आपके दामन से कभी न हों जुदा,\n" +
                 "खुदा की रहमतों में कभी कमी न आये,\n" +
@@ -1885,9 +1923,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "तेरा जन्मदिन मैं मनाउ, फूलों से बहारों से…\n" +
                 "हर एक खूबसुरती मैं \uD83C\uDF0E दुनियाँ से ले आऊ,\n" +
                 "सझाऊ ये महेफिल में हर हसीन नजारों से… ~ Happy Birthday\uD83C\uDF82");
-        System.out.println("Birthday "+birthday.size());
+        System.out.println("Birthday " + birthday.size());
 
-        mother =new ArrayList<>();
+        mother = new ArrayList<>();
         mother.add("चलती फिरती आँखों से अज़ाँ देखी है,\n" +
                 "मैंने जन्नत तो नहीं देखी है माँ देखी है।");
         mother.add("तेरे क़दमों में ये सारा जहां होगा एक दिन,\n" +
@@ -1988,9 +2026,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "बिना लालच उन्हें प्यार करती है,\n" +
                 "भगवान् का दूसरा रूप है मेरी माँ,\n" +
                 "जो हर दुःख में मेरा साथ देती है।");
-        System.out.println("Mother "+mother.size());
+        System.out.println("Mother " + mother.size());
 
-        father =new ArrayList<>();
+        father = new ArrayList<>();
         father.add("मुझे मोहब्बत है अपने हाथों की सब लकीरों से,\n" +
                 "ना जाने पापा ने कौनसी ऊँगली को पकड़कर चलना सिखाया था।");
         father.add("नसीब वाले हैं जिनके सर पर पिता का हाथ होता हैं,\n" +
@@ -2066,10 +2104,10 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "मेरी आँखों में खुशी मेरे पापा की बदोलत है ,\n" +
                 "पापा किसी खुदा से कम नही\n" +
                 "क्योकि मेरी ज़िन्दगी की सारी खुशी पापा की बदोलत है.");
-        System.out.println("Father "+father.size());
+        System.out.println("Father " + father.size());
 
 
-        new_year =new ArrayList<>();
+        new_year = new ArrayList<>();
         new_year.add("बीते साल को विदा इस कदर करते हैं,\n" +
                 "ज़ो नहीं किया अब तक वो भी कर गुज़रते हैं,\n" +
                 "नया साल आने की खुशियाँ तो सब मनाते हैं,\n" +
@@ -2112,9 +2150,9 @@ public class TopicShayariActivity extends AppCompatActivity {
         new_year.add("");
         new_year.add("");
         new_year.add("");
-        System.out.println("New Year "+new_year.size());
+        System.out.println("New Year " + new_year.size());
 
-        intezaar =new ArrayList<>();
+        intezaar = new ArrayList<>();
         intezaar.add("ऐ मौत उन्हें भुलाए ज़माने गुजर गए,\n" +
                 "आ जा कि ज़हर खाए ज़माने गुजर गए,\n" +
                 "ओ जाने वाले आ कि तेरे इंतजार में,\n" +
@@ -2151,78 +2189,138 @@ public class TopicShayariActivity extends AppCompatActivity {
         intezaar.add("");
         intezaar.add("");
         intezaar.add("");
-        System.out.println("Intezaar "+intezaar.size());
+        System.out.println("Intezaar " + intezaar.size());
 
 
         ArrayList<String> shayariList = null;
-        if(topic.equals("alone")){
-            shayariList=alone;
+        if (topic.equals("legend")) {
+            shayariList = legend;
+            shayariImage.setImageResource(R.drawable.legend);
+        } else if (topic.equals("alone")) {
+            shayariList = alone;
             shayariImage.setImageResource(R.drawable.alone);
-        }else if(topic.equals("attitude")){
-            shayariList=attitude;
+        } else if (topic.equals("attitude")) {
+            shayariList = attitude;
             shayariImage.setImageResource(R.drawable.attitude);
-        }else if(topic.equals("love")){
-            shayariList=love;
+        } else if (topic.equals("love")) {
+            shayariList = love;
             shayariImage.setImageResource(R.drawable.love);
-        }else if(topic.equals("dosti")){
-            shayariList=dosti;
+        } else if (topic.equals("dosti")) {
+            shayariList = dosti;
             shayariImage.setImageResource(R.drawable.dosti);
-        }else if(topic.equals("zindagi")){
-            shayariList=zindagi;
+        } else if (topic.equals("zindagi")) {
+            shayariList = zindagi;
             shayariImage.setImageResource(R.drawable.zindagi);
-        }else if(topic.equals("funny")){
-            shayariList=funny;
+        } else if (topic.equals("funny")) {
+            shayariList = funny;
             shayariImage.setImageResource(R.drawable.funny);
-        }else if(topic.equals("bewafa")){
-            shayariList=bewafa;
+        } else if (topic.equals("bewafa")) {
+            shayariList = bewafa;
             shayariImage.setImageResource(R.drawable.bewafa);
-        }else if(topic.equals("sad")){
-            shayariList=sad;
+        } else if (topic.equals("sad")) {
+            shayariList = sad;
             shayariImage.setImageResource(R.drawable.sad);
-        }else if(topic.equals("judai")){
-            shayariList=judai;
+        } else if (topic.equals("judai")) {
+            shayariList = judai;
             shayariImage.setImageResource(R.drawable.judai);
-        }else if(topic.equals("dard")){
-            shayariList=dard;
+        } else if (topic.equals("dard")) {
+            shayariList = dard;
             shayariImage.setImageResource(R.drawable.dard);
-        }else if(topic.equals("good_morning")){
-            shayariList=good_morning;
+        } else if (topic.equals("good_morning")) {
+            shayariList = good_morning;
             shayariImage.setImageResource(R.drawable.good_morning);
-        }else if(topic.equals("good_night")){
-            shayariList=good_night;
+        } else if (topic.equals("good_night")) {
+            shayariList = good_night;
             shayariImage.setImageResource(R.drawable.good_night);
-        }else if(topic.equals("birthday")){
-            shayariList=birthday;
+        } else if (topic.equals("birthday")) {
+            shayariList = birthday;
             shayariImage.setImageResource(R.drawable.birthday);
-        }else if(topic.equals("mother")){
-            shayariList=mother;
+        } else if (topic.equals("mother")) {
+            shayariList = mother;
             shayariImage.setImageResource(R.drawable.mother);
-        }else if(topic.equals("father")){
-            shayariList=father;
+        } else if (topic.equals("father")) {
+            shayariList = father;
             shayariImage.setImageResource(R.drawable.father);
-        }else if(topic.equals("new_year")){
-            shayariList=new_year;
+        } else if (topic.equals("new_year")) {
+            shayariList = new_year;
             shayariImage.setImageResource(R.drawable.new_year);
-        }else if(topic.equals("intezaar")){
-            shayariList=intezaar;
+        } else if (topic.equals("intezaar")) {
+            shayariList = intezaar;
             shayariImage.setImageResource(R.drawable.intezaar);
         }
 
         final int[] index = {0};
         shayariText.setText(shayariList.get(index[0]));
-        curShayari=shayariList.get(index[0]);
+        curShayari = shayariList.get(index[0]);
+        curIndex = index[0];
+        uniqueText = topic + "_" + curIndex;
+
+        if (mAuth.getCurrentUser() != null) {
+            String uid = mAuth.getCurrentUser().getUid();
+            mRef = mDatabase.getReference().child(uid).child("favourite_shayari").child(uniqueText);
+
+            mRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        isCurShayariFav = true;
+                        int imgResource = R.drawable.ic_favorite_24;
+                        favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                        favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                        favButton.setText("Remove Fav");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
         final ArrayList<String> finalShayariList = shayariList;
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                nextButtonFunction();
                 shayariImage.startAnimation(rightAnim);
                 //shayariText.startAnimation(rightAnim);
                 index[0]++;
-                if (index[0] > finalShayariList.size()-1){
-                    index[0] =0;
+                if (index[0] > finalShayariList.size() - 1) {
+                    index[0] = 0;
                 }
                 shayariText.setText(finalShayariList.get(index[0]));
-                curShayari=finalShayariList.get(index[0]);
+                curShayari = finalShayariList.get(index[0]);
+                curIndex = index[0];
+                uniqueText = topic + "_" + curIndex;
+
+                if (mAuth.getCurrentUser() != null) {
+                    String uid = mAuth.getCurrentUser().getUid();
+                    mRef = mDatabase.getReference().child(uid).child("favourite_shayari").child(uniqueText);
+
+                    mRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                isCurShayariFav = true;
+                                int imgResource = R.drawable.ic_favorite_24;
+                                favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                                favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                                favButton.setText("Remove fav");
+                            } else {
+                                isCurShayariFav = false;
+                                int imgResource = R.drawable.ic_favorite_border_24;
+                                favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                                favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                                favButton.setText("Add to fav");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
         });
         prevButton.setOnClickListener(new View.OnClickListener() {
@@ -2231,12 +2329,42 @@ public class TopicShayariActivity extends AppCompatActivity {
                 shayariImage.startAnimation(leftAnim);
                 //shayariText.startAnimation(leftAnim);
                 index[0]--;
-                if (index[0] <0){
-                    index[0] =finalShayariList.size()-1;
+                if (index[0] < 0) {
+                    index[0] = finalShayariList.size() - 1;
                 }
                 shayariText.setText(finalShayariList.get(index[0]));
-                curShayari=finalShayariList.get(index[0]);
+                curShayari = finalShayariList.get(index[0]);
+                curIndex = index[0];
+                uniqueText = topic + "_" + curIndex;
 
+                if (mAuth.getCurrentUser() != null) {
+                    String uid = mAuth.getCurrentUser().getUid();
+                    mRef = mDatabase.getReference().child(uid).child("favourite_shayari").child(uniqueText);
+
+                    mRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                isCurShayariFav = true;
+                                int imgResource = R.drawable.ic_favorite_24;
+                                favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                                favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                                favButton.setText("Remove fav");
+                            } else {
+                                isCurShayariFav = false;
+                                int imgResource = R.drawable.ic_favorite_border_24;
+                                favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                                favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                                favButton.setText("Add to fav");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
         });
 
@@ -2253,31 +2381,98 @@ public class TopicShayariActivity extends AppCompatActivity {
             }
         });
 
-        shayariImage.setOnTouchListener(new OnSwipeTouchListener(TopicShayariActivity.this){
+        shayariImage.setOnTouchListener(new OnSwipeTouchListener(TopicShayariActivity.this) {
 
             public void onSwipeTop() {
                 //Toast.makeText(TopicShayariActivity.this, "top", Toast.LENGTH_SHORT).show();
             }
+
             public void onSwipeRight() {
+                //prev
                 shayariImage.startAnimation(leftAnim);
                 shayariText.startAnimation(leftAnim);
                 index[0]--;
-                if (index[0] <0){
-                    index[0] =finalShayariList.size()-1;
+                if (index[0] < 0) {
+                    index[0] = finalShayariList.size() - 1;
                 }
                 shayariText.setText(finalShayariList.get(index[0]));
-                curShayari=finalShayariList.get(index[0]);
+                curShayari = finalShayariList.get(index[0]);
+                curIndex = index[0];
+                uniqueText = topic + "_" + curIndex;
+
+                if (mAuth.getCurrentUser() != null) {
+                    String uid = mAuth.getCurrentUser().getUid();
+                    mRef = mDatabase.getReference().child(uid).child("favourite_shayari").child(uniqueText);
+
+                    mRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                isCurShayariFav = true;
+                                int imgResource = R.drawable.ic_favorite_24;
+                                favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                                favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                                favButton.setText("Remove fav");
+                            } else {
+                                isCurShayariFav = false;
+                                int imgResource = R.drawable.ic_favorite_border_24;
+                                favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                                favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                                favButton.setText("Add to fav");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
+
             public void onSwipeLeft() {
+                //next
                 shayariImage.startAnimation(rightAnim);
                 shayariText.startAnimation(rightAnim);
                 index[0]++;
-                if (index[0] > finalShayariList.size()-1){
-                    index[0] =0;
+                if (index[0] > finalShayariList.size() - 1) {
+                    index[0] = 0;
                 }
                 shayariText.setText(finalShayariList.get(index[0]));
-                curShayari=finalShayariList.get(index[0]);
+                curShayari = finalShayariList.get(index[0]);
+                curIndex = index[0];
+                uniqueText = topic + "_" + curIndex;
+
+                if (mAuth.getCurrentUser() != null) {
+                    String uid = mAuth.getCurrentUser().getUid();
+                    mRef = mDatabase.getReference().child(uid).child("favourite_shayari").child(uniqueText);
+
+                    mRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                isCurShayariFav = true;
+                                int imgResource = R.drawable.ic_favorite_24;
+                                favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                                favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                                favButton.setText("Remove fav");
+                            } else {
+                                isCurShayariFav = false;
+                                int imgResource = R.drawable.ic_favorite_border_24;
+                                favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                                favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                                favButton.setText("Add to fav");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
+
             public void onSwipeBottom() {
                 //Toast.makeText(TopicShayariActivity.this, "bottom", Toast.LENGTH_SHORT).show();
             }
@@ -2286,7 +2481,56 @@ public class TopicShayariActivity extends AppCompatActivity {
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(TopicShayariActivity.this, "Added to favorite :-)", Toast.LENGTH_SHORT).show();
+                mProgress.show();
+                if (mAuth.getCurrentUser() == null) {
+                    mProgress.dismiss();
+                    startActivity(new Intent(TopicShayariActivity.this, FavouriteShayariActivity.class));
+                    Toast.makeText(TopicShayariActivity.this, "Please login to add shayari to favourites!", Toast.LENGTH_SHORT).show();
+                } else {
+                    String uid = mAuth.getCurrentUser().getUid();
+                    mRef = mDatabase.getReference().child(uid).child("favourite_shayari");
+
+                    if (isCurShayariFav) {
+                        mRef.child(uniqueText).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                mProgress.dismiss();
+                                if (task.isSuccessful()){
+                                    Toast.makeText(TopicShayariActivity.this, "Shayari removed from Favourite!", Toast.LENGTH_SHORT).show();
+                                    isCurShayariFav=false;
+                                    int imgResource = R.drawable.ic_favorite_border_24;
+                                    favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                                    favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                                    favButton.setText("Add to fav");
+                                }else{
+                                    Toast.makeText(TopicShayariActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }else{
+
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("topic", topic);
+                        map.put("shayari", curShayari);
+                        mRef = mRef.child(uniqueText);
+                        mRef.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                mProgress.dismiss();
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(TopicShayariActivity.this, "Shayari added to favourite!", Toast.LENGTH_SHORT).show();
+                                    isCurShayariFav=true;
+                                    int imgResource = R.drawable.ic_favorite_24;
+                                    favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                                    favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
+                                    favButton.setText("Remove fav");
+                                } else {
+                                    Toast.makeText(TopicShayariActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                }
             }
         });
         moreButton.setOnClickListener(new View.OnClickListener() {
@@ -2299,7 +2543,7 @@ public class TopicShayariActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("Shayari",curShayari);
+                ClipData clip = ClipData.newPlainText("Shayari", curShayari);
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(TopicShayariActivity.this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
             }
@@ -2308,7 +2552,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         whatsAppShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                v=view;
+                v = view;
                 /*
                 Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
                 whatsappIntent.setType("text/plain");
@@ -2323,9 +2567,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 //watermark.setVisibility(View.VISIBLE);
 
                 if (checkPermission()) {
-                    Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
+                    Bitmap bitmap = Bitmap.createBitmap(relativeLayout.getWidth(), relativeLayout.getHeight(),
                             Bitmap.Config.ARGB_8888);
-                    Canvas canvas=new Canvas(bitmap);
+                    Canvas canvas = new Canvas(bitmap);
                     relativeLayout.draw(canvas);
 
                     Bitmap icon = bitmap;
@@ -2371,7 +2615,7 @@ public class TopicShayariActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                v=view;
+                v = view;
                 /*
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 *//*This will be the actual content you wish you share.*//*
@@ -2393,6 +2637,12 @@ public class TopicShayariActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void nextButtonFunction() {
+    }
+
+    private void prevButtonFunction() {
     }
 
     private boolean checkPermission() {
@@ -2446,6 +2696,7 @@ public class TopicShayariActivity extends AppCompatActivity {
                 break;
         }
     }
+
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(TopicShayariActivity.this)
                 .setMessage(message)
@@ -2455,10 +2706,10 @@ public class TopicShayariActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void share(){
-        Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
+    private void share() {
+        Bitmap bitmap = Bitmap.createBitmap(relativeLayout.getWidth(), relativeLayout.getHeight(),
                 Bitmap.Config.ARGB_8888);
-        Canvas canvas=new Canvas(bitmap);
+        Canvas canvas = new Canvas(bitmap);
         relativeLayout.draw(canvas);
 
         Bitmap icon = bitmap;
@@ -2493,10 +2744,11 @@ public class TopicShayariActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-    public void goToEditActivity(){
-        Intent intent=new Intent(TopicShayariActivity.this,EditActivity.class);
-        intent.putExtra("cur_shayari",curShayari);
-        intent.putExtra("topic",topic);
+
+    public void goToEditActivity() {
+        Intent intent = new Intent(TopicShayariActivity.this, EditActivity.class);
+        intent.putExtra("cur_shayari", curShayari);
+        intent.putExtra("topic", topic);
         startActivity(intent);
         //Toast.makeText(TopicShayariActivity.this, "Jald aa raha :-)", Toast.LENGTH_SHORT).show();
     }
