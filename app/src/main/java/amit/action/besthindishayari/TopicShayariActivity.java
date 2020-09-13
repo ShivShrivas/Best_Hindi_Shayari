@@ -2484,7 +2484,18 @@ public class TopicShayariActivity extends AppCompatActivity {
                 mProgress.show();
                 if (mAuth.getCurrentUser() == null) {
                     mProgress.dismiss();
-                    startActivity(new Intent(TopicShayariActivity.this, FavouriteShayariActivity.class));
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                    builder.setTitle("To add shayari to favorite you need login to the app!");
+                    builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(TopicShayariActivity.this,LoginActivity.class));
+                            finish();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Toast.makeText(TopicShayariActivity.this, "Please login to add shayari to favourites!", Toast.LENGTH_SHORT).show();
                 } else {
                     String uid = mAuth.getCurrentUser().getUid();

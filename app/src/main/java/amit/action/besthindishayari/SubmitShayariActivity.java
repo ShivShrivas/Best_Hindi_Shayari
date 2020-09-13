@@ -91,7 +91,7 @@ public class SubmitShayariActivity extends AppCompatActivity {
         if (curUser==null){
             mProgress.dismiss();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("To share your shayari with us you need login to the app!");
+            builder.setTitle("To share your shayari with us you need login to the app!");
             builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -119,6 +119,7 @@ public class SubmitShayariActivity extends AppCompatActivity {
                         Toast.makeText(SubmitShayariActivity.this, "Shayari uploaded successfully!", Toast.LENGTH_SHORT).show();
                         category.setText("");
                         shayariText.setText("");
+                        category.requestFocus();
 
                     }else{
                         Toast.makeText(SubmitShayariActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
