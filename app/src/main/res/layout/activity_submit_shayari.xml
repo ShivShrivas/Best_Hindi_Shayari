@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/submit_scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -89,7 +90,7 @@
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/text_color"
                 app:hintTextColor="@color/text_color"
-                app:layout_constraintBottom_toTopOf="@+id/button"
+                app:layout_constraintBottom_toTopOf="@+id/submit_shayari_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/textInputLayout"
@@ -101,11 +102,11 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
                     android:inputType="textMultiLine"
-                    android:textSize="18sp" />
+                    android:textSize="22sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/submit_shayari_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
