@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
             headerEmail.setText("");
             headerName.setText("Guest User");
+
         }
 
     }
@@ -142,6 +143,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_submit_shayari:
                 Intent subIntent=new Intent(MainActivity.this,SubmitShayariActivity.class);
                 startActivity(subIntent);
+                break;
+            case R.id.nav_login:
+                Intent loginIntent=new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(loginIntent);
+                finish();
                 break;
         }
     }

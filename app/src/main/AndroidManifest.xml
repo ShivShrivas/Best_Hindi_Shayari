@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SubmitShayariActivity"></activity>
+        <activity android:name=".FeedbackActivity"></activity>
+        <activity android:name=".SubmitShayariActivity" />
         <activity android:name=".FavouriteShayariActivity" />
         <activity android:name=".EditActivity" />
         <activity android:name=".HomeActivity" />
