@@ -12,6 +12,7 @@
     <color name="transparent">#00000000</color>
     <color name="secondary_text_color">#757575</color>
     <color name="app_background_color">#ffffff</color>
+    <color name="test_color">#003F91</color>
 
 
 

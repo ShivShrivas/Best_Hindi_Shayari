@@ -2482,9 +2482,10 @@ public class TopicShayariActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mProgress.show();
+
                 if (mAuth.getCurrentUser() == null) {
                     mProgress.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(),R.style.AlertDialogTheme);
                     builder.setTitle("To add shayari to favorite you need login to the app!");
                     builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
                         @Override
@@ -2496,6 +2497,7 @@ public class TopicShayariActivity extends AppCompatActivity {
                     builder.setNegativeButton("Cancel", null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
+
                     Toast.makeText(TopicShayariActivity.this, "Please login to add shayari to favourites!", Toast.LENGTH_SHORT).show();
                 } else {
                     String uid = mAuth.getCurrentUser().getUid();
@@ -2564,17 +2566,6 @@ public class TopicShayariActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 v = view;
-                /*
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.setPackage("com.whatsapp");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, curShayari);
-                try {
-                    startActivity(whatsappIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(TopicShayariActivity.this, "WhatsApp have not been installed.", Toast.LENGTH_SHORT).show();
-                }
-                */
                 //watermark.setVisibility(View.VISIBLE);
 
                 if (checkPermission()) {
@@ -2627,18 +2618,6 @@ public class TopicShayariActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 v = view;
-                /*
-                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                *//*This will be the actual content you wish you share.*//*
-                //String shareBody = "Here is the share content body";
-                *//*The type of the content is text, obviously.*//*
-                intent.setType("text/plain");
-                *//*Applying information Subject and Body.*//*
-                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shayari Share");
-                intent.putExtra(android.content.Intent.EXTRA_TEXT, curShayari);
-                *//*Fire!*//*
-                startActivity(Intent.createChooser(intent, "Share Using"));
-                */
                 if (checkPermission()) {
                     share();
 

@@ -210,17 +210,6 @@
             android:textAllCaps="false"
             android:textColor="@color/button_text_color" />
 
-        <Button
-            android:id="@+id/edit_shayari_fav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/text_color"
-            android:drawableStart="@drawable/ic_favorite_border_24"
-            android:drawableTint="@color/button_text_color"
-            android:text="Add to Fav"
-            android:textAllCaps="false"
-            android:textColor="@color/button_text_color" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

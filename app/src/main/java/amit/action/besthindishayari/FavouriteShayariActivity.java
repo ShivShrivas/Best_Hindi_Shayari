@@ -57,6 +57,8 @@ public class FavouriteShayariActivity extends AppCompatActivity {
         if (curUser==null){
             loginText.setVisibility(View.VISIBLE);
             loginBtn.setVisibility(View.VISIBLE);
+        }else{
+            zeroShayariText.setVisibility(View.VISIBLE);
         }
 
     }

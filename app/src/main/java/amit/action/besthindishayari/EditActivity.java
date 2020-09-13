@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -43,9 +44,10 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class EditActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
+    private int styleIndex=0;
     private Toolbar toolbar;
     private String shayariText,topic;
-    private Button backgroundBtn,gradient,textColor,saveImage,textStyle,addToFav,whatsAppShare,shareAll,copyText;
+    private Button backgroundBtn,gradient,textColor,saveImage,textStyle,whatsAppShare,shareAll,copyText;
     private ImageView bgImage,testImage;
     private TextView shayariTextView,watermark;
     private RelativeLayout relativeLayout;
@@ -67,7 +69,6 @@ public class EditActivity extends AppCompatActivity {
         textColor=findViewById(R.id.edit_shayari_text_color);
         textStyle=findViewById(R.id.edit_shayari_text_style);
         saveImage=findViewById(R.id.edit_shayari_save_image);
-        addToFav=findViewById(R.id.edit_shayari_fav);
         relativeLayout=findViewById(R.id.edit_relative_layout);
         watermark=findViewById(R.id.edit_shayari_watermark);
 
@@ -115,6 +116,32 @@ public class EditActivity extends AppCompatActivity {
         }else if(topic.equals("intezaar")){
             bgImage.setImageResource(R.drawable.intezaar);
         }
+
+        textStyle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (styleIndex>3){
+                    styleIndex=0;
+                }
+                if (styleIndex==0){
+                    shayariTextView.setTypeface(null, Typeface.NORMAL);
+                    Toast.makeText(EditActivity.this, "NORMAL", Toast.LENGTH_SHORT).show();
+                    styleIndex++;
+                }else if (styleIndex==1){
+                    shayariTextView.setTypeface(null, Typeface.ITALIC);
+                    Toast.makeText(EditActivity.this, "ITALIC", Toast.LENGTH_SHORT).show();
+                    styleIndex++;
+                }else if (styleIndex==2){
+                    shayariTextView.setTypeface(null, Typeface.BOLD_ITALIC);
+                    Toast.makeText(EditActivity.this, "BOLD_ITALIC", Toast.LENGTH_SHORT).show();
+                    styleIndex++;
+                }else if (styleIndex==3){
+                    shayariTextView.setTypeface(null, Typeface.BOLD);
+                    Toast.makeText(EditActivity.this, "BOLD", Toast.LENGTH_SHORT).show();
+                    styleIndex++;
+                }
+            }
+        });
 
         shareAll.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -90,7 +90,7 @@ public class SubmitShayariActivity extends AppCompatActivity {
         mProgress.show();
         if (curUser==null){
             mProgress.dismiss();
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialogTheme);
             builder.setTitle("To share your shayari with us you need login to the app!");
             builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
                 @Override
