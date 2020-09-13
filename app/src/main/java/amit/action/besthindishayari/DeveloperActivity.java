@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 public class DeveloperActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -13,9 +15,9 @@ public class DeveloperActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_developer);
 
-        toolbar=findViewById(R.id.feedback_app_bar);
+        toolbar=findViewById(R.id.developer_app_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Feedback");
+        getSupportActionBar().setTitle("Developer Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -23,5 +25,9 @@ public class DeveloperActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    public void connectWithMe(View view) {
+        Toast.makeText(this, "Ruko Zaraaaaa", Toast.LENGTH_SHORT).show();
     }
 }

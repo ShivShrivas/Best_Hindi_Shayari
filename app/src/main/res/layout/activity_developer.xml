@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".DeveloperActivity">
 
     <include
-        android:id="@+id/feedback_app_bar"
+        android:id="@+id/developer_app_bar"
         layout="@layout/app_bar_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +21,7 @@
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feedback_app_bar"
+        app:layout_constraintTop_toBottomOf="@+id/developer_app_bar"
         app:srcCompat="@drawable/dev_image" />
 
     <TextView
@@ -49,7 +50,7 @@
         android:backgroundTint="@color/text_color"
         android:fontFamily="@font/montserrat_bold"
         android:onClick="connectWithMe"
-        android:text="Connect with me"
+        android:text="Connect"
         android:textColor="@color/button_text_color"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

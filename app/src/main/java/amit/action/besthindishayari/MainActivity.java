@@ -140,8 +140,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(loginIntent);
                 finish();
                 break;
+            case R.id.nav_developer:
+                Intent devIntent=new Intent(MainActivity.this, DeveloperActivity.class);
+                startActivity(devIntent);
+                break;
             case R.id.nav_feedback:
-                Intent feedIntent=new Intent(MainActivity.this, DeveloperActivity.class);
+                Intent feedIntent=new Intent(MainActivity.this, FeedbackActivity.class);
                 startActivity(feedIntent);
                 break;
         }
