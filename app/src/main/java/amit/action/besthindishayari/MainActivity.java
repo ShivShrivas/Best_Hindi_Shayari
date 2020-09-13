@@ -149,6 +149,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(loginIntent);
                 finish();
                 break;
+            case R.id.nav_feedback:
+                Intent feedIntent=new Intent(MainActivity.this,FeedbackActivity.class);
+                startActivity(feedIntent);
+                break;
         }
     }
 
