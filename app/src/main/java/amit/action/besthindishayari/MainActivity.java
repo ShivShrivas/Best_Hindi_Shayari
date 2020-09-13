@@ -95,6 +95,13 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        if (curUser!=null){
+            headerName.setText(curUser.getDisplayName());
+            headerEmail.setText(curUser.getEmail());
+        }else{
+            headerEmail.setText("");
+            headerName.setText("Guest User");
+        }
 
     }
 
