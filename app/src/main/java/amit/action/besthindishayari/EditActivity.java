@@ -83,6 +83,83 @@ public class EditActivity extends AppCompatActivity {
         shayariTextView.setText(shayariText);
         setImageByTopic();
 
+        gradient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (gIndex>16){
+                    gIndex=0;
+                }
+                if (gIndex==0){
+                    bgImage.setImageResource(R.drawable.g0);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==1){
+                    bgImage.setImageResource(R.drawable.g1);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==2){
+                    bgImage.setImageResource(R.drawable.g2);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==3){
+                    bgImage.setImageResource(R.drawable.g3);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==4){
+                    bgImage.setImageResource(R.drawable.g4);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==5){
+                    bgImage.setImageResource(R.drawable.g5);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==6){
+                    bgImage.setImageResource(R.drawable.g6);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==7){
+                    bgImage.setImageResource(R.drawable.g7);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==8){
+                    bgImage.setImageResource(R.drawable.g8);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==9){
+                    bgImage.setImageResource(R.drawable.g9);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==10){
+                    bgImage.setImageResource(R.drawable.g10);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==11){
+                    bgImage.setImageResource(R.drawable.g11);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==12){
+                    bgImage.setImageResource(R.drawable.g12);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==13){
+                    bgImage.setImageResource(R.drawable.g13);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==14){
+                    bgImage.setImageResource(R.drawable.g14);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==15){
+                    bgImage.setImageResource(R.drawable.g15);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }else if (gIndex==16){
+                    bgImage.setImageResource(R.drawable.g16);
+                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    gIndex++;
+                }
+            }
+        });
 
         backgroundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
