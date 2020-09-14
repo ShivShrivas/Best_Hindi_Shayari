@@ -44,7 +44,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class EditActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
-    private int styleIndex=0;
+    private int styleIndex=0,bgIndex=0,gIndex=0;
     private Toolbar toolbar;
     private String shayariText,topic;
     private Button backgroundBtn,gradient,textColor,saveImage,textStyle,whatsAppShare,shareAll,copyText;
@@ -81,41 +81,42 @@ public class EditActivity extends AppCompatActivity {
         topic=getIntent().getStringExtra("topic");
 
         shayariTextView.setText(shayariText);
-        if(topic.equals("alone")){
-            bgImage.setImageResource(R.drawable.alone);
-        }else if(topic.equals("attitude")){
-            bgImage.setImageResource(R.drawable.attitude);
-        }else if(topic.equals("love")){
-            bgImage.setImageResource(R.drawable.love);
-        }else if(topic.equals("dosti")){
-            bgImage.setImageResource(R.drawable.dosti);
-        }else if(topic.equals("zindagi")){
-            bgImage.setImageResource(R.drawable.zindagi);
-        }else if(topic.equals("funny")){
-            bgImage.setImageResource(R.drawable.funny);
-        }else if(topic.equals("bewafa")){
-            bgImage.setImageResource(R.drawable.bewafa);
-        }else if(topic.equals("sad")){
-            bgImage.setImageResource(R.drawable.sad);
-        }else if(topic.equals("judai")){
-            bgImage.setImageResource(R.drawable.judai);
-        }else if(topic.equals("dard")){
-            bgImage.setImageResource(R.drawable.dard);
-        }else if(topic.equals("good_morning")){
-            bgImage.setImageResource(R.drawable.good_morning);
-        }else if(topic.equals("good_night")){
-            bgImage.setImageResource(R.drawable.good_night);
-        }else if(topic.equals("birthday")){
-            bgImage.setImageResource(R.drawable.birthday);
-        }else if(topic.equals("mother")){
-            bgImage.setImageResource(R.drawable.mother);
-        }else if(topic.equals("father")){
-            bgImage.setImageResource(R.drawable.father);
-        }else if(topic.equals("new_year")){
-            bgImage.setImageResource(R.drawable.new_year);
-        }else if(topic.equals("intezaar")){
-            bgImage.setImageResource(R.drawable.intezaar);
-        }
+        setImageByTopic();
+
+
+        backgroundBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (bgIndex>5){
+                    bgIndex=0;
+                }
+                if (bgIndex==0){
+                    bgImage.setImageResource(R.drawable.intezaar);
+                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==1){
+                    bgImage.setImageResource(R.drawable.mother);
+                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==2){
+                    bgImage.setImageResource(R.drawable.birthday);
+                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==3){
+                    bgImage.setImageResource(R.drawable.father);
+                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==4){
+                    bgImage.setImageResource(R.drawable.judai);
+                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==5){
+                    setImageByTopic();
+                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }
+            }
+        });
 
         textStyle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,6 +239,45 @@ public class EditActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void setImageByTopic() {
+        if(topic.equals("alone")){
+            bgImage.setImageResource(R.drawable.alone);
+        }else if(topic.equals("attitude")){
+            bgImage.setImageResource(R.drawable.attitude);
+        }else if(topic.equals("love")){
+            bgImage.setImageResource(R.drawable.love);
+        }else if(topic.equals("dosti")){
+            bgImage.setImageResource(R.drawable.dosti);
+        }else if(topic.equals("zindagi")){
+            bgImage.setImageResource(R.drawable.zindagi);
+        }else if(topic.equals("funny")){
+            bgImage.setImageResource(R.drawable.funny);
+        }else if(topic.equals("bewafa")){
+            bgImage.setImageResource(R.drawable.bewafa);
+        }else if(topic.equals("sad")){
+            bgImage.setImageResource(R.drawable.sad);
+        }else if(topic.equals("judai")){
+            bgImage.setImageResource(R.drawable.judai);
+        }else if(topic.equals("dard")){
+            bgImage.setImageResource(R.drawable.dard);
+        }else if(topic.equals("good_morning")){
+            bgImage.setImageResource(R.drawable.good_morning);
+        }else if(topic.equals("good_night")){
+            bgImage.setImageResource(R.drawable.good_night);
+        }else if(topic.equals("birthday")){
+            bgImage.setImageResource(R.drawable.birthday);
+        }else if(topic.equals("mother")){
+            bgImage.setImageResource(R.drawable.mother);
+        }else if(topic.equals("father")){
+            bgImage.setImageResource(R.drawable.father);
+        }else if(topic.equals("new_year")){
+            bgImage.setImageResource(R.drawable.new_year);
+        }else if(topic.equals("intezaar")){
+            bgImage.setImageResource(R.drawable.intezaar);
+        }
+    }
+
     private void share(){
         Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
                 Bitmap.Config.ARGB_8888);
