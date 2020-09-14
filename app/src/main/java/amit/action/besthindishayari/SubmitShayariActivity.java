@@ -100,6 +100,7 @@ public class SubmitShayariActivity extends AppCompatActivity {
                 }
             });
             builder.setNegativeButton("Cancel", null);
+            builder.setCancelable(false);
             AlertDialog dialog = builder.create();
             dialog.show();
         }else{

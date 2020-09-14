@@ -2485,7 +2485,7 @@ public class TopicShayariActivity extends AppCompatActivity {
 
                 if (mAuth.getCurrentUser() == null) {
                     mProgress.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(),R.style.AlertDialogTheme);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TopicShayariActivity.this,R.style.AlertDialogTheme);
                     builder.setTitle("To add shayari to favorite you need login to the app!");
                     builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
                         @Override
@@ -2495,6 +2495,7 @@ public class TopicShayariActivity extends AppCompatActivity {
                         }
                     });
                     builder.setNegativeButton("Cancel", null);
+                    builder.setCancelable(false);
                     AlertDialog dialog = builder.create();
                     dialog.show();
 

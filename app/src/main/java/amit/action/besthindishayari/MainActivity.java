@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_logout:
-
-                AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this,R.style.AlertDialogTheme);
                 builder.setTitle("Dou you really want to logout!");
                 builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                     @Override
@@ -122,33 +122,41 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+                builder.setCancelable(false);
                 AlertDialog alertDialog=builder.create();
                 alertDialog.show();
 
                 break;
 
             case R.id.nav_fav:
+                drawerLayout.closeDrawer(Gravity.LEFT);
                 Intent intent=new Intent(MainActivity.this,FavouriteShayariActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_submit_shayari:
+                drawerLayout.closeDrawer(Gravity.LEFT);
                 Intent subIntent=new Intent(MainActivity.this,SubmitShayariActivity.class);
                 startActivity(subIntent);
                 break;
             case R.id.nav_login:
+                drawerLayout.closeDrawer(Gravity.LEFT);
                 Intent loginIntent=new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(loginIntent);
                 finish();
                 break;
             case R.id.nav_developer:
+                drawerLayout.closeDrawer(Gravity.LEFT);
                 Intent devIntent=new Intent(MainActivity.this, DeveloperActivity.class);
                 startActivity(devIntent);
                 break;
             case R.id.nav_feedback:
+                drawerLayout.closeDrawer(Gravity.LEFT);
                 Intent feedIntent=new Intent(MainActivity.this, FeedbackActivity.class);
                 startActivity(feedIntent);
                 break;
             case R.id.nav_connect:
+                drawerLayout.closeDrawer(Gravity.LEFT);
+
                 Intent conIntent=new Intent(MainActivity.this, ConnectUsActivity.class);
                 startActivity(conIntent);
                 break;
