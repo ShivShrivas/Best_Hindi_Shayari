@@ -3,6 +3,7 @@ package amit.action.besthindishayari;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -41,5 +42,11 @@ public class ConnectUsActivity extends AppCompatActivity {
                 .create();
 
         setContentView(aboutPage);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ConnectUsActivity.this,MainActivity.class));
+        finish();
     }
 }

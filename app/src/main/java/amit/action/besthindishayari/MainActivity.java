@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -86,13 +87,15 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        Menu nav_Menu = navigationView.getMenu();
         if (curUser!=null){
             headerName.setText(curUser.getDisplayName());
             headerEmail.setText(curUser.getEmail());
+            nav_Menu.findItem(R.id.nav_login).setVisible(false);
         }else{
             headerEmail.setText("");
             headerName.setText("Guest User");
-
+            nav_Menu.findItem(R.id.nav_logout).setVisible(false);
         }
 
     }
