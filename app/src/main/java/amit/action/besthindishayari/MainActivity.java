@@ -148,6 +148,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent feedIntent=new Intent(MainActivity.this, FeedbackActivity.class);
                 startActivity(feedIntent);
                 break;
+            case R.id.nav_connect:
+                Intent conIntent=new Intent(MainActivity.this, ConnectUsActivity.class);
+                startActivity(conIntent);
+                break;
         }
     }
 

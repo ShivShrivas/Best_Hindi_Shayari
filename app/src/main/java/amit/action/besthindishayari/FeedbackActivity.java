@@ -91,6 +91,7 @@ public class FeedbackActivity extends AppCompatActivity {
             HashMap<String,String> map=new HashMap<>();
             map.put("name",curUser.getDisplayName());
             map.put("feedback_text",feed);
+            map.put("email",curUser.getEmail());
 
             long time=System.currentTimeMillis();
             String curTime=Long.toString(time);
