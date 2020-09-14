@@ -44,7 +44,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class EditActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
-    private int styleIndex=0,bgIndex=0,gIndex=0;
+    private int styleIndex=0,bgIndex=0,gIndex=0,colorIndex=0;
     private Toolbar toolbar;
     private String shayariText,topic;
     private Button backgroundBtn,gradient,textColor,saveImage,textStyle,whatsAppShare,shareAll,copyText;
@@ -82,6 +82,60 @@ public class EditActivity extends AppCompatActivity {
 
         shayariTextView.setText(shayariText);
         setImageByTopic();
+
+        textColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (colorIndex>10){
+                    colorIndex=0;
+                }
+                if (colorIndex==0){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c0));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }else if (colorIndex==1){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c1));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }else if (colorIndex==2){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c2));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }else if (colorIndex==3){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c3));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }else if (colorIndex==4){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c4));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }else if (colorIndex==5){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c5));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }else if (colorIndex==6){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c6));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }else if (colorIndex==7){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c7));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }else if (colorIndex==8){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c8));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }else if (colorIndex==9){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c9));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }else if (colorIndex==10){
+                    shayariTextView.setTextColor(getResources().getColor(R.color.c10));
+                    Toast.makeText(EditActivity.this, "Color"+(colorIndex+1), Toast.LENGTH_SHORT).show();
+                    colorIndex++;
+                }
+            }
+        });
 
         gradient.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,5 +15,18 @@
     <color name="test_color">#003F91</color>
 
 
+    <color name="c0">#214F4B</color>
+    <color name="c1">#DDA77B</color>
+    <color name="c2">#945D5E</color>
+    <color name="c3">#37123C</color>
+    <color name="c4">#071108</color>
+    <color name="c5">#C7DBE6</color>
+    <color name="c6">#FFADC6</color>
+    <color name="c7">#DFE2CF</color>
+    <color name="c8">#A6A867</color>
+    <color name="c9">#B10F2E</color>
+    <color name="c10">#ffffff</color>
+
+
 
 </resources>
