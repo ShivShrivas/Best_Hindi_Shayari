@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,6 +56,7 @@ public class TopicShayariActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
     private FirebaseAuth mAuth;
     private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
     private StringBuffer topicNameText;
@@ -85,6 +87,9 @@ public class TopicShayariActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         prevButton = findViewById(R.id.topic_shayari_prev_button);
         nextButton = findViewById(R.id.topic_shayari_next_button);
@@ -2559,7 +2564,12 @@ public class TopicShayariActivity extends AppCompatActivity {
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToEditActivity();
+
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    goToEditActivity();
+                }
             }
         });
         copyButton.setOnClickListener(new View.OnClickListener() {

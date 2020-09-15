@@ -22,6 +22,8 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser curUser;
     private TextView headerName,headerEmail,categoriesText;
     boolean doubleTap=false;
+    private AdView mAdView;
+
 
     private Toolbar mToolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -51,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         curUser=mAuth.getCurrentUser();
         MobileAds.initialize(this);
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         //Hooks
         mToolbar=findViewById(R.id.main_app_bar);
