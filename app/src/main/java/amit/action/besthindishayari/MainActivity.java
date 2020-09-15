@@ -203,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     public void checkUserExistence(){
         curUser=mAuth.getCurrentUser();
         if (curUser==null){
