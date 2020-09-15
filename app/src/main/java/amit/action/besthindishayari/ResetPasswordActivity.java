@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
@@ -87,9 +88,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     AlertDialog dialog = builder.create();
                     dialog.show();
 
+                }else if (task.getException() instanceof FirebaseAuthInvalidUserException){
+                    mProgress.dismiss();
+                    Toast.makeText(ResetPasswordActivity.this,"There is no user with this email, Please SignUP",Toast.LENGTH_LONG).show();
                 }else{
                     mProgress.dismiss();
-                    Toast.makeText(ResetPasswordActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResetPasswordActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

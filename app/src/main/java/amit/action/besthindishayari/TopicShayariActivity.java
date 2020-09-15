@@ -30,6 +30,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -51,6 +54,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class TopicShayariActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
     private FirebaseAuth mAuth;
+    private AdView mAdView;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
     private StringBuffer topicNameText;
@@ -76,6 +80,11 @@ public class TopicShayariActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         mProgress = new ProgressDialog(this);
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
 
         prevButton = findViewById(R.id.topic_shayari_prev_button);
         nextButton = findViewById(R.id.topic_shayari_next_button);
