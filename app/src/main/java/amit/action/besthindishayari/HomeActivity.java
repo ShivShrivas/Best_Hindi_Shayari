@@ -56,6 +56,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void goToMainActivity(View view) {
         Intent intent=new Intent(HomeActivity.this,MainActivity.class);
+        intent.putExtra("login_type","guest");
         startActivity(intent);
         finish();
     }

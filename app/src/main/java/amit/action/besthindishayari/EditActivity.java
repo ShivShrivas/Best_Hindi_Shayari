@@ -32,6 +32,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -42,7 +48,9 @@ import java.io.OutputStream;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class EditActivity extends AppCompatActivity {
+public class EditActivity extends AppCompatActivity implements RewardedVideoAdListener {
+    private AdView mAdView1,mAdView2;
+    private RewardedVideoAd mRewardedVideoAd;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private int styleIndex=0,bgIndex=0,gIndex=0,colorIndex=0;
     private Toolbar toolbar;
@@ -57,6 +65,18 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+
+        mAdView1 = findViewById(R.id.edit_adView1);
+        AdRequest adRequest1 = new AdRequest.Builder().build();
+        mAdView1.loadAd(adRequest1);
+
+        mAdView2 = findViewById(R.id.edit_adView2);
+        AdRequest adRequest2 = new AdRequest.Builder().build();
+        mAdView2.loadAd(adRequest2);
+
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(this);
+        loadRewardedVideoAd();
 
         toolbar=findViewById(R.id.edit_app_bar);
         shayariTextView=findViewById(R.id.edit_shayari_text);
@@ -145,71 +165,71 @@ public class EditActivity extends AppCompatActivity {
                 }
                 if (gIndex==0){
                     bgImage.setImageResource(R.drawable.g0);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==1){
                     bgImage.setImageResource(R.drawable.g1);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==2){
                     bgImage.setImageResource(R.drawable.g2);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==3){
                     bgImage.setImageResource(R.drawable.g3);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==4){
                     bgImage.setImageResource(R.drawable.g4);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==5){
                     bgImage.setImageResource(R.drawable.g5);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==6){
                     bgImage.setImageResource(R.drawable.g6);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==7){
                     bgImage.setImageResource(R.drawable.g7);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==8){
                     bgImage.setImageResource(R.drawable.g8);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==9){
                     bgImage.setImageResource(R.drawable.g9);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==10){
                     bgImage.setImageResource(R.drawable.g10);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==11){
                     bgImage.setImageResource(R.drawable.g11);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==12){
                     bgImage.setImageResource(R.drawable.g12);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==13){
                     bgImage.setImageResource(R.drawable.g13);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==14){
                     bgImage.setImageResource(R.drawable.g14);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==15){
                     bgImage.setImageResource(R.drawable.g15);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }else if (gIndex==16){
                     bgImage.setImageResource(R.drawable.g16);
-                    Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "Image"+(gIndex+1), Toast.LENGTH_SHORT).show();
                     gIndex++;
                 }
             }
@@ -218,32 +238,85 @@ public class EditActivity extends AppCompatActivity {
         backgroundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (bgIndex>5){
+                if (bgIndex>11){
                     bgIndex=0;
                 }
                 if (bgIndex==0){
-                    bgImage.setImageResource(R.drawable.intezaar);
-                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgImage.setImageResource(R.drawable.b1);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
                     bgIndex++;
                 }else if (bgIndex==1){
-                    bgImage.setImageResource(R.drawable.mother);
-                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgImage.setImageResource(R.drawable.b2);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
                     bgIndex++;
                 }else if (bgIndex==2){
-                    bgImage.setImageResource(R.drawable.birthday);
-                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgImage.setImageResource(R.drawable.b3);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
                     bgIndex++;
                 }else if (bgIndex==3){
-                    bgImage.setImageResource(R.drawable.father);
-                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgImage.setImageResource(R.drawable.b4);
                     bgIndex++;
                 }else if (bgIndex==4){
-                    bgImage.setImageResource(R.drawable.judai);
-                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgImage.setImageResource(R.drawable.b5);
                     bgIndex++;
                 }else if (bgIndex==5){
-                    setImageByTopic();
-                    Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgImage.setImageResource(R.drawable.b6);
+                    bgIndex++;
+                }else if (bgIndex==6){
+                    bgImage.setImageResource(R.drawable.b7);
+                    bgIndex++;
+                }else if (bgIndex==7){
+                    bgImage.setImageResource(R.drawable.b8);
+                    bgIndex++;
+                }else if (bgIndex==8){
+                    bgImage.setImageResource(R.drawable.b9);
+                    bgIndex++;
+                }else if (bgIndex==9){
+                    bgImage.setImageResource(R.drawable.b10);
+                    bgIndex++;
+                }else if (bgIndex==10){
+                    bgImage.setImageResource(R.drawable.b11);
+                    bgIndex++;
+                }else if (bgIndex==11){
+                    bgImage.setImageResource(R.drawable.b12);
+                    bgIndex++;
+                }else if (bgIndex==12){
+                    bgImage.setImageResource(R.drawable.b13);
+                    bgIndex++;
+                }else if (bgIndex==13){
+                    bgImage.setImageResource(R.drawable.b14);
+                    bgIndex++;
+                }else if (bgIndex==14){
+                    bgImage.setImageResource(R.drawable.funny);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==15){
+                    bgImage.setImageResource(R.drawable.sad);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==16){
+                    bgImage.setImageResource(R.drawable.good_night);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==17){
+                    bgImage.setImageResource(R.drawable.alone);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==18){
+                    bgImage.setImageResource(R.drawable.attitude);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==19){
+                    bgImage.setImageResource(R.drawable.judai);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==20){
+                    bgImage.setImageResource(R.drawable.bewafa);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
+                    bgIndex++;
+                }else if (bgIndex==21){
+                    bgImage.setImageResource(R.drawable.father);
+                    //Toast.makeText(EditActivity.this, "Image"+(bgIndex+1), Toast.LENGTH_SHORT).show();
                     bgIndex++;
                 }
             }
@@ -253,15 +326,15 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (styleIndex>3){
-                    styleIndex=0;
+                    styleIndex=0;//
                 }
                 if (styleIndex==0){
                     shayariTextView.setTypeface(null, Typeface.NORMAL);
-                    Toast.makeText(EditActivity.this, "NORMAL", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "NORMAL", Toast.LENGTH_SHORT).show();
                     styleIndex++;
                 }else if (styleIndex==1){
                     shayariTextView.setTypeface(null, Typeface.ITALIC);
-                    Toast.makeText(EditActivity.this, "ITALIC", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "ITALIC", Toast.LENGTH_SHORT).show();
                     styleIndex++;
                 }else if (styleIndex==2){
                     shayariTextView.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -269,7 +342,7 @@ public class EditActivity extends AppCompatActivity {
                     styleIndex++;
                 }else if (styleIndex==3){
                     shayariTextView.setTypeface(null, Typeface.BOLD);
-                    Toast.makeText(EditActivity.this, "BOLD", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditActivity.this, "BOLD", Toast.LENGTH_SHORT).show();
                     styleIndex++;
                 }
             }
@@ -299,77 +372,140 @@ public class EditActivity extends AppCompatActivity {
 
         whatsAppShare.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                v=view;
+            public void onClick(final View view) {
 
-                if (checkPermission()) {
-                    Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
-                            Bitmap.Config.ARGB_8888);
-                    Canvas canvas=new Canvas(bitmap);
-                    relativeLayout.draw(canvas);
-
-                    Bitmap icon = bitmap;
-                    Intent share = new Intent(Intent.ACTION_SEND);
-                    share.setType("image/png");
-                    share.setPackage("com.whatsapp");
-
-                    ContentValues values = new ContentValues();
-                    values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-                    values.put(MediaStore.Images.Media.TITLE, "Your Shayari");
-                    values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
-                    //MediaStore.Images.Media.insertImage(getContentResolver(), icon, topic+" shayari", "yourDescription");
-                    Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                            values);
-
-
-                    OutputStream outstream;
-                    try {
-                        outstream = getContentResolver().openOutputStream(uri);
-                        icon.compress(Bitmap.CompressFormat.PNG, 100, outstream);
-                        outstream.close();
-                    } catch (Exception e) {
-                        System.err.println(e.toString());
-                        Toast.makeText(EditActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this,R.style.AlertDialogTheme);
+                builder.setTitle("Your image ready to share");
+                builder.setMessage("Help author by giving credit for this image?");
+                builder.setPositiveButton("YES, Credit Author and share image", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mRewardedVideoAd.isLoaded()) {
+                            mRewardedVideoAd.show();
+                            continueWhatsAppShare(view);
+                        }else{
+                            continueWhatsAppShare(view);
+                        }
                     }
-
-                    share.putExtra(Intent.EXTRA_STREAM, uri);
-                    try {
-                        startActivity(share);
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        Toast.makeText(EditActivity.this, "WhatsApp have not been installed.", Toast.LENGTH_SHORT).show();
+                });
+                builder.setNegativeButton("No, Continue share image", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        continueWhatsAppShare(view);
                     }
+                });
+                builder.setCancelable(false);
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
-                } else {
-                    requestPermission();
-                }
+
             }
         });
         saveImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
-                v=view;
-                if (checkPermission()) {
-                    Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
-                            Bitmap.Config.ARGB_8888);
-                    Canvas canvas=new Canvas(bitmap);
-                    relativeLayout.draw(canvas);
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this,R.style.AlertDialogTheme);
+                builder.setTitle("Your image is edited");
+                builder.setMessage("Help author by giving credit for this image?");
+                builder.setPositiveButton("YES, Credit Author and save image", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mRewardedVideoAd.isLoaded()) {
+                            mRewardedVideoAd.show();
+                            Toast.makeText(EditActivity.this, "Image saved in gallery", Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(EditActivity.this, "Image saved in gallery", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("No, Continue Save image", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(EditActivity.this, "Image saved in gallery", Toast.LENGTH_LONG).show();
+                    }
+                });
+                builder.setCancelable(false);
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
-                    Bitmap icon = bitmap;
-                    ContentValues values = new ContentValues();
-                    values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-                    values.put(MediaStore.Images.Media.TITLE, "Your Shayari");
-                    values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
-                    MediaStore.Images.Media.insertImage(getContentResolver(), icon, topic+" shayari", "yourDescription");
-                    //getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                    Toast.makeText(EditActivity.this, "Image saved in gallery", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    requestPermission();
-                }
+                continueImageSaving(view);
             }
         });
     }
+
+    private void continueWhatsAppShare(View view) {
+        v=view;
+        if (checkPermission()) {
+            Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas=new Canvas(bitmap);
+            relativeLayout.draw(canvas);
+
+            Bitmap icon = bitmap;
+            Intent share = new Intent(Intent.ACTION_SEND);
+            share.setType("image/png");
+            share.setPackage("com.whatsapp");
+
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+            values.put(MediaStore.Images.Media.TITLE, "Your Shayari");
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+            //MediaStore.Images.Media.insertImage(getContentResolver(), icon, topic+" shayari", "yourDescription");
+            Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    values);
+
+
+            OutputStream outstream;
+            try {
+                outstream = getContentResolver().openOutputStream(uri);
+                icon.compress(Bitmap.CompressFormat.PNG, 100, outstream);
+                outstream.close();
+            } catch (Exception e) {
+                System.err.println(e.toString());
+                Toast.makeText(EditActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            share.putExtra(Intent.EXTRA_STREAM, uri);
+            try {
+                startActivity(share);
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(EditActivity.this, "WhatsApp have not been installed.", Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            requestPermission();
+        }
+    }
+
+    private void continueImageSaving(View view) {
+        v=view;
+        if (checkPermission()) {
+            Bitmap bitmap=Bitmap.createBitmap(relativeLayout.getWidth(),relativeLayout.getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas=new Canvas(bitmap);
+            relativeLayout.draw(canvas);
+
+            Bitmap icon = bitmap;
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+            values.put(MediaStore.Images.Media.TITLE, "Your Shayari");
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+            MediaStore.Images.Media.insertImage(getContentResolver(), icon, topic+" shayari", "yourDescription");
+            //getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            //Toast.makeText(EditActivity.this, "Image saved in gallery", Toast.LENGTH_LONG).show();
+
+        } else {
+            requestPermission();
+        }
+    }
+
+    private void loadRewardedVideoAd() {
+        //ca-app-pub-3940256099942544/5224354917
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+                new AdRequest.Builder().build());
+    }
+
 
     private void setImageByTopic() {
         if(topic.equals("alone")){
@@ -506,5 +642,45 @@ public class EditActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        loadRewardedVideoAd();
+
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+
+    }
+
+    @Override
+    public void onRewardedVideoCompleted() {
     }
 }

@@ -194,6 +194,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void goToMainActivity() {
         Intent intent=new Intent(RegistrationActivity.this,MainActivity.class);
+        intent.putExtra("login_type","email");
         startActivity(intent);
         finish();
     }

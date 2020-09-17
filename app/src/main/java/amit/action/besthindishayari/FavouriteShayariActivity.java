@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class FavouriteShayariActivity extends AppCompatActivity {
     private TextView loginText, zeroShayariText;
+    private AdView mAdView1;
     private Button loginBtn;
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
@@ -44,6 +47,10 @@ public class FavouriteShayariActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         curUser = mAuth.getCurrentUser();
+
+        mAdView1 = findViewById(R.id.fav_adView);
+        final AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView1.loadAd(adRequest);
 
         loginText = findViewById(R.id.fav_text_login);
         loginBtn = findViewById(R.id.fav_button_login);

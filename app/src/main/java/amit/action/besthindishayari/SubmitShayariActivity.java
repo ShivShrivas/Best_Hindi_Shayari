@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 public class SubmitShayariActivity extends AppCompatActivity {
+    private AdView mAdView1, mAdView2;
     private Toolbar toolbar;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
@@ -43,6 +46,14 @@ public class SubmitShayariActivity extends AppCompatActivity {
         mDatabase=FirebaseDatabase.getInstance();
         subRef=mDatabase.getReference().child("user_shayari");
         curUser=mAuth.getCurrentUser();
+
+        mAdView1 = findViewById(R.id.submit_adView1);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView1.loadAd(adRequest);
+
+        mAdView2 = findViewById(R.id.submit_adView2);
+        AdRequest adRequest2 = new AdRequest.Builder().build();
+        mAdView2.loadAd(adRequest2);
 
         //toolbar
         toolbar=findViewById(R.id.submit_shayari_app_bar);

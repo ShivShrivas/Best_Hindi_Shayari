@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -55,7 +56,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class TopicShayariActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
     private FirebaseAuth mAuth;
-    private AdView mAdView;
+    private AdView mAdView1, mAdView2;
     private InterstitialAd mInterstitialAd;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
@@ -83,13 +84,16 @@ public class TopicShayariActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
         mProgress = new ProgressDialog(this);
 
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView1 = findViewById(R.id.topic_adView1);
+        final AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView1.loadAd(adRequest);
+
+        mAdView2 = findViewById(R.id.topic_adView2);
+        final AdRequest adRequest2 = new AdRequest.Builder().build();
+        mAdView2.loadAd(adRequest2);
 
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         prevButton = findViewById(R.id.topic_shayari_prev_button);
         nextButton = findViewById(R.id.topic_shayari_next_button);
@@ -373,6 +377,62 @@ public class TopicShayariActivity extends AppCompatActivity {
         System.out.println("Dard " + dard.size());
 
         attitude = new ArrayList<>();
+        attitude.add("सर झुकाने की आदत नहीं है,\n" +
+                "आँसू बहाने की आदत नहीं है,\n" +
+                "हम खो गए तो पछताओगे बहुत,\n" +
+                "क्युकी हमारी लौट के आने की आदत नहीं है......!!!");
+        attitude.add("चलो आज फिर थोडा मुस्कुराया जाये,\n" +
+                "बिना माचिस के कुछ लोगो को जलाया जाये.....!!!");
+        attitude.add("ये मत समझ कि तेरे काबिल नहीं हैं हम,\n" +
+                "तड़प रहे हैं वो जिसे हासिल नहीं हैं हम.....!!!");
+        attitude.add("बस इतनी सी बात पर हमारा परिचय तमाम होता है,\n" +
+                "हम उस रास्ते नही जाते जो रास्ता आम होता है…........!!!");
+        attitude.add("आग लगाना मेरी फितरत में नही है,\n" +
+                "मेरी सादगी से लोग जलें तो मेरा क्या कसूर......!!!");
+        attitude.add("लोग मुझे अपने होंठों से लगाए हुए हैं,\n" +
+                "मेरी शोहरत किसी के नाम की मोहताज नहीं......!!!");
+        attitude.add("लाख तलवारे बढ़ी आती हों गर्दन की तरफ,\n" +
+                "सर झुकाना नहीं आता तो झुकाए कैसे.........!!!");
+        attitude.add("हम तो इतने रोमान्टिक है की हम अगर थोड़ी देर,\n" +
+                "मोबाइल हाथ मै लेले.. तो वो भी गरम हो जाता है......!!!");
+        attitude.add("छोड़ दी है अब हमने वो फनकारी वरना,\n" +
+                "तुझ जैसे हसीन तो हम कलम से बना देते थे......!!!");
+        attitude.add("मेरे बारे में अपनी सोच को थोड़ा बदल के देख\u200B,\n" +
+                "\u200Bमुझसे भी बुरे हैं लोग तू घर से निकल के देख\u200B.....!!!");
+        attitude.add("रहते हैं आस-पास ही लेकिन पास नहीं होते,\n" +
+                "कुछ लोग मुझसे जलते हैं बस ख़ाक नहीं होते.....!!");
+        attitude.add("दुश्मनों को सज़ा देने की एक तहज़ीब है मेरी,\n" +
+                "मैं हाथ नहीं उठाता बस नज़रों से गिरा देता हूँ......!!!");
+        attitude.add("बेवक़्त, बेवजह, बेहिसाब मुस्कुरा देता हूँ,\n" +
+                "आधे दुश्मनो को तो यूँ ही हरा देता हूँ........!!!");
+        attitude.add("अपनी शख्शियत की क्या मिसाल दूँ यारों\n" +
+                "ना जाने कितने मशहूर हो गये, मुझे बदनाम करते करते.....!!!");
+        attitude.add("न मैं गिरा और न मेरी उम्मीदों के मीनार गिरे,\n" +
+                "पर कुछ लोग मुझे गिराने में कई बार गिरे........!!!");
+        attitude.add("जो खानदानी रईस हैं वो, रखते हैं मिजाज़ नर्म अपना,\n" +
+                "तुम्हारा लहजा बता रहा है तुम्हारी दौलत नई नई है…....!!!");
+        attitude.add("उसने पुछा, कहाँ रहते हो,\n" +
+                "मैने कहा, अपनी औकात मे रहता हुं......!!!");
+        attitude.add("ख़त्म हो भी तो कैसे, ये मंजिलो की आरजू,\n" +
+                "ये रास्ते है के रुकते नहीं, और इक हम के झुकते नही......!!!");
+        attitude.add("हथियार तो सिर्फ शौक के लिए रखा करते है,\n" +
+                "वरना किसी के मन में खौंफ पैदा करने के लिए तो बस नाम ही काफी है.....!!!");
+        attitude.add("नमक स्वाद अनुसार,\n" +
+                "अकड औकात अनुसार.......!!!");
+        attitude.add("शब्द पहचान बनें मेरी तो बेहतर है,\n" +
+                "चेहरे का क्या है,\n" +
+                "वो मेरे साथ ही चला जाएगा एक दिन…..!!!");
+        attitude.add("अंदाज़ कुछ अलग ही मेरे सोचने का है,\n" +
+                "सब को मंज़िल का है शौख मुझे रास्ते का है.......!!!");
+        attitude.add("तेरी मोहब्बत को कभी खेल नही समजा,\n" +
+                "वरना खेल तो इतने खेले है कि कभी हारे नही….!!!");
+        attitude.add("मुझे एक ने पूछा \"कहा रहते हो\"\n" +
+                "मैंने कहा \"औकात मे\"\n" +
+                "साले ने फिर पूछा \"कब तक\"\n" +
+                "मैंने कहा \"सामने वाला रहे तब तक\"..........!!!");
+        attitude.add("नफरत भी हम हैसियत देख कर करते है,\n" +
+                "प्यार तो बहुत दूर की बात है........!!!");
+        ////////////
         attitude.add("Attitude तो अपना भी खानदानी है,और तू मेरे दिल की रानी है, इसलिये कह रहा हूँ मान जा, क्योंकि अपनी तो करोड़ो दीवानी हैं।");
         attitude.add("मेरा वाला थोड़ा लेट आयेगा, लेकिन जब आयेगा तो लाखो में एक आयेगा।");
         attitude.add("किरदार में मेरी भले ही अदाकारियां नही है, खुद्दारी है, Attitude है, पर मक्कारियां नही है।");
@@ -657,6 +717,38 @@ public class TopicShayariActivity extends AppCompatActivity {
         //https://bestnow.in/love-shayari-hindi/20/
         love.add("एक उमर बीत चली है तुझे चाहते हुए,\n" +
                 "तू आज भी बेखबर है कल की तरह।");
+        love.add("अजीब सी बेताबी है तेरे बिना,\n" +
+                "रह भी लेते है और रहा भी नही जाता…..!!!");
+        love.add("तु मिल गई है तो मुझ पे नाराज है खुदा,\n" +
+                "कहता है की तु अब कुछ माँगता नहीं है.....!!!");
+        love.add("अपनी सांसों में महकता पाया है तुझे,\n" +
+                "हर खवाब मे बुलाया है तुझे,\n" +
+                "क्यू न करे याद तुझ को,\n" +
+                "जब खुदा ने हमारे लिए बनाया है तुझे........!!!");
+        love.add("दिल की किताब में गुलाब उनका था,\n" +
+                "रात की नींद में ख्वाब उनका था,\n" +
+                "कितना प्यार करते हो जब हमने पूछा,\n" +
+                "मर जायंगे तुम्हारे बिना ये जबाब उनका था......!!!");
+        love.add("तेरे हुस्न को परदे की ज़रुरत ही क्या है,\n" +
+                "कौन होश में रहता है तुझे देखने के बाद…....!!!");
+        love.add("हमारी तडप तो कुछ भी नहीं है हुजुर,\n" +
+                "सुना है कि आपके दिदार के लिए तो आइना भी तरसता है…...!!!");
+        love.add("पूछते थे ना कितना प्यार है हमें तुम से,\n" +
+                "लो अब गिन लो… ये बूँदें बारिश की…...!!!");
+        love.add("क़यामत टूट पड़ती है ज़रा से होंठ हिलने पर,\n" +
+                "जाने क्या हस्र होगा जब वो खुलकर मुस्कुरायेंगे.......!!!");
+        love.add("मै उसको चाँद कह दू ये मुमकिन तो है,\n" +
+                "मगर... लोग उसे रात भर देखें ये मुझे गवारा नहीं…..!!!");
+        love.add("दिलो जान से करेंगे हिफ़ाज़त तेरी,\n" +
+                "बस एक बार तू कह दे कि, मैं अमानत हूं तेरी.....!!!");
+        love.add("शान से हम तेरे दिल में रहेंगे,\n" +
+                "तेरी मोहब्बत पे जान निसार करेंगे,\n" +
+                "देख के जलेंगी हमे दुनिया सारी,\n" +
+                "इस कदर बे-पनाह तुझे प्यार करेंगे......!!!");
+        love.add("जब से देखा है तेरी आँखो मे झाँक कर,\n" +
+                "कोई भी आईना अच्छा नही लगता,\n" +
+                "तेरी मोहब्बत मे ऐसे हुए है दीवाने,\n" +
+                "तुम्हे कोई और देखे तो अच्छा नही लगता........!!!");
         love.add("अना कहती है इल्तेजा क्या करनी,\n" +
                 "वो मोहब्बत ही क्या जो मिन्नतों से मिले।");
         love.add("जिंदगी में कोई प्यार से प्यारा नही मिलता,\n" +
@@ -865,6 +957,81 @@ public class TopicShayariActivity extends AppCompatActivity {
         System.out.println("Love " + love.size());
 
         dosti = new ArrayList<>();
+        dosti.add("कितनी छोटी सी दुनिया है मेरी,\n" +
+                "एक मै हूँ और एक दोस्ती तेरी….....!!!");
+        dosti.add("तुम जुआरी बड़े ही माहिर हो,\n" +
+                "एक दिल का पत्ता फेक कर जिदंगी खरीद लेते हो......!!");
+        dosti.add("दावे मोहब्बत के मुझे नहीं आते यारो,\n" +
+                "एक जान है जब दिल चाहे मांग लेना......!!!");
+        dosti.add("तू मेरे दिल पे हाथ रख के तो देख,\n" +
+                "मैं तेरे हाथ पे दिल ना रख दूँ तो कहना.......!!!");
+        dosti.add("वक्त की यारी तो हर कोई करता है मेरे दोस्त,\n" +
+                "मजा तो तब है जब वक्त बदल जाये पर यार ना बदले…...!!!");
+        dosti.add("तुझमे और मुझमे फर्क है सिर्फ इतना,\n" +
+                "तेरा कुछ कुछ हूँ मैँ, और मेरा सब कुछ है तू…..!!!");
+        dosti.add("जल जाते हैं मेरे अंदाज़ से मेरे दुश्मन,\n" +
+                "क्यूंकि एक मुद्दत से मैंने,\n" +
+                "न मोहब्बत बदली और न दोस्त बदले ......!!!");
+        dosti.add("मेरी दोस्ती का फायदा उठा लेना,\n" +
+                "क्युंकी…मेरी दुश्मनी का नुकसान सह नही पाओगे…...!!!");
+        dosti.add("हमने अपने नसिब से ज्यादा अपने दोस्तो पर भरोसा रखा है,\n" +
+                "क्यु की नसिब तो बहोत बार बदला है, लैकिन मेरे दोस्त अभी भी वहि है.......!!!");
+        dosti.add("दिलों में खोट है ज़ुबां से प्यार करते हैं,\n" +
+                "बहुत से लोग दुनिया में यही व्यापार करते हैं…...!!");
+        dosti.add("क़ाश कोई ऐसा हो, जो गले लगा कर कहे,\n" +
+                "तेरे दर्द से, मुझे भी तकलीफ होती है...........!!!");
+        dosti.add("मुझको मेरे अकेलेपन से अब शिकायत नहीं है,\n" +
+                "मै पत्थर हूं मुझे खुद से भी मुहब्बत नहीं है........!!!");
+        dosti.add("ए दोस्त !!\n" +
+                "कौन कहता है की मुझ में कोई कमाल रखा है,\n" +
+                "मुझे तो बस कुछ दोस्तो ने संभाल रक्खा है……...!!!");
+        dosti.add("वो शख्स फिर से मुझे तोड़ गया आज,\n" +
+                "जिसे कभी हम पूरी दुनिया कहा करते थे…..!!!");
+        dosti.add("याद नहीं वो रूठा था या मैं रूठा था,\n" +
+                "साथ हमारा जरा सी बात पे छूटा था….!!!");
+        dosti.add("वक़्त के साथ ढल गया हूँ मैं,\n" +
+                "बस ज़रा-सा बदल गया हूँ मैं.......!!!");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
+        dosti.add("");
         dosti.add("आसमान से तोड़ कर सितारा दिया है,\n" +
                 "आलम-ए-तन्हाई में एक सहारा दिया है,\n" +
                 "मेरी किस्मत भी नाज़ करती है मुझपे,\n" +
@@ -1426,111 +1593,282 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "कोई हँसता है तो कोई रोता है,\n" +
                 "पर सबसे सुखी वही होता है,\n" +
                 "जो शाम को दो पैग मार के सोता है।");
+        funny.add("Tumhaari yaad dil se jaane nahin denge,\n" +
+                "Tumhaare jaisa dost khone bhi nahin denge,\n" +
+                "Roz sharafat se sms kiya karo warna ……,\n" +
+                "Ek kaan k neeche denge or rone bhi nahin denge…");
         funny.add("उसी दिन से व्हाट्सएप्प से नफरत हो गयी ग़ालिब,\n" +
                 "जब बाल कटवाने के लिए एडमिन ने चंदा माँग लिया।\n");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
-        funny.add("");
+        funny.add("कैसे मुमकिन था किसी डॉक्टर से इलाज करना\n" +
+                "अरे दोस्त…. इश्क का रोग था…\n" +
+                "मम्मी के चप्पल से ही आराम आया…...!!!");
+        funny.add("जिस तरह से पेड़ काटे जा रहे हैं,\n" +
+                "वो दिन ज्यादा दूर नही जब,\n" +
+                "'हरियाली' के नाम पर सिर्फ 'लड़कियां' रह जायेगीं.........!!!");
+        funny.add("किस किस का नाम लें, अपनी बरबादी में,\n" +
+                "बहुत लोग आये थे दुआए देने शादी में.......!!!");
+        funny.add("किसी से दिल लगाने से अच्छा है,\n" +
+                "घर में झाड़ु पोछा लगा लो,\n" +
+                "कम से कम मम्मी तो खुश हो जाएँगी.........!!!");
+        funny.add("समुन्दर से कह दो, अपनी लहरों को समेट के रखे,\n" +
+                "ज़िन्दगी में तूफान लाने के लिए, घरवाली ही काफी है….!!!");
+        funny.add("गरीबी आदमियों के कपडे उतार लेती है,\n" +
+                "और अमीरी औरतों के……!!!");
+        funny.add("लगी है मेहंदी पावँ में क्या घूमोगे गावं मे,\n" +
+                "असर धूप का क्या जाने जो रहते है छावं मे…...!!!");
+        funny.add("मीठा शहद बनाने वाली मधुमक्खी\n" +
+                "भी डंख मारने से नहीं चुकती\n" +
+                "इसलिए होंशियार रहें,\n" +
+                "बहुत मीठा बोलने वाले भी\n" +
+                "'हनी' नहीं 'हानि' दे सकते है..........!!!");
+        funny.add("Hum Aaj Bhi Dil Ka Aashiyana Sajane Se Darte Hain,\n" +
+                "Baagon Mein Phool Khilaney Se Darte Hain,\n" +
+                "Hamari Ek Pasand Se Tut Jaayeinge Hazaaro Dil,\n" +
+                "Tabhi Toh Hum Aaj Bhi Girlfriend Bananey Se Darte Hain…");
+        funny.add("Ishq Key Khayaal Bohat Hain..\n" +
+                "Ishq Key Charche Bohat Hain..\n" +
+                "Sochte Hain Hum Bhi Kar Le Ishq..\n" +
+                "Par Sunte Hain Ishq Mein Kharche Bohat Hain..");
+        funny.add("Sitaro me aap, Hawao me aap, Fizao me aap,\n" +
+                "Baharo me aap, Dhop me aap, Chaaon me aap,\n" +
+                "Sach hi suna hai ki buri aatmao ka koi thikana nahi hota…");
+        funny.add("Julfo me foolo ko saja ke aayi hai,\n" +
+                "Chehare se dupatta utha ke aayi hai,\n" +
+                "Kisi ne puchha aaj badi khubsurat lag rahi ho,\n" +
+                "Mane kaha shayad aaj naha ke aayi hai…");
+        funny.add("Punam ki rat me chand badal jata hai,\n" +
+                "Waqt k sath insan badal jata hai,\n" +
+                "Sochte hai ki apko tang na kare,\n" +
+                "Magar sochte sochte plan badal jata hai..");
+        funny.add("Jindagi behaal hai,\n" +
+                "Sur hai naa taal hai,\n" +
+                "Msgbox bhi kangal hai,\n" +
+                "kya aapki sms factory me hadtal hai,\n" +
+                "yaar kuch to bhejo ye meri,\n" +
+                "mobile ki zindagi ka sawaal hai…");
+        funny.add("Wo ishk to karti hai par janon nahi karti.\n" +
+                "Wo katal to karti hai par khon nahi karti.\n" +
+                "Eis kadar kanjoos hai meri chahne wali\n" +
+                "Mis call to karti hai phone nahi karti…");
+        funny.add("Log Kehte Hai Ki Pyar Ek Aisi Bimari Hai,\n" +
+                "Jiski Koi Dawa Nahi Hoti,\n" +
+                "Hum Kehte Hai Bewfai Ek Aisi Dawa Hai,\n" +
+                "Jisse Ye Bimari Dubara Nahi Hoti…");
+        funny.add("Arz Hai…\n" +
+                "Na Muskurane Ko Jee Chahta Hai\n" +
+                "Na Kuch Khane-Peene, Na Sone Ko Jee Chahta Hai\n" +
+                "Ye Garmi Ab Bardaast Nahi Hoti\n" +
+                "Sab Chhod Kar Ab Shimla Chale Jane Ko Jee Chahta Hai…");
+        funny.add("Na ishq kar mare yaar\n" +
+                "yeh ladkiya bahut satati hai,\n" +
+                "na karna in par aitbaar\n" +
+                "yah kharcha bahut karwati hai,,\n" +
+                "recharge tum karwa ke dete ho\n" +
+                "aur number mera lagati hai …");
+        funny.add("Har taraf padhai ka saya hai\n" +
+                "Kitabo main sukh kisne paya hai\n" +
+                "Ladke to jate hai tution ladkiyan dekhne\n" +
+                "Aur sir kehte hai dekho itni barsat mai ladka padhne aya hai…");
+        funny.add("Zindagi lambi hai dost banate raho,\n" +
+                "Dil mile na mile haath milate raho,\n" +
+                "Taj Mahal banaana toh bahut costly hoga,\n" +
+                "Par har gali mai ek Mumtaz banate raho…");
+        funny.add("Usne haathon per mehendi lagai hai,\n" +
+                "Humne uski doli sajai hai,\n" +
+                "Hamein pata tha woh bewafa niklegi\n" +
+                "Isliye humne uski choti behen bhi fasayi hai !!! ");
+        funny.add("Paani mein Whiskey milao toh nasha chadta hai,\n" +
+                "Paani mein Rum milao toh nasha chadta hai,\n" +
+                "Paani mein Brandy milao toh nasha chadta hai,\n" +
+                "Saala paani mein hi kuch gadbad hai… :)");
+        funny.add("Teri zindagi mein kabhi ghum na ho\n" +
+                "Teri aankhe kabhi gam na ho\n" +
+                "Meri dua hai ke mile tujhe ek smart si dulhan\n" +
+                "Jiska wieght 150 Kg. se Kam na ho! :)");
+        funny.add("Dil ki baat dil mein mat rakhna,\n" +
+                "Jo pasand ho usse I love you kehna,\n" +
+                "Agar wo gusse mein aa jaaye to darna mat,\n" +
+                "Raakhi nikaal na aur kehna pyari behna milti rehna…");
+        funny.add("Humne bhi kabhi pyar kiya tha,\n" +
+                "thoda nai besumar kiya tha,\n" +
+                "dil tut kar reh gaya,\n" +
+                "jab usne kaha,aree Maine to Majak kiya tha…");
+        funny.add("Sher Sunaata hoon zara ghor se suno,\n" +
+                "Main Sher Sunaata hoon zara ghor se suno,\n" +
+                "Ja mein nahi sunata kisi our se suno …");
+        funny.add("Kya hua jo usne racha li mehndi,\n" +
+                "Hamm bhi aab sehra sajayenge,\n" +
+                "Mujhe ptta tha ke vo aapne naseeb main nhi hai,\n" +
+                "Ab uski chotti behen ko fasayenge…..");
+        funny.add("Door se dekha toh ek sher tha …\n" +
+                "Door se dekha toh ek sher tha …\n" +
+                "Door se dekha toh ek sher tha …\n" +
+                "isliye paas gaya hii nahi ..");
+        funny.add("Mere Dost Tum Bhi Likha Karo Shayari\n" +
+                "Tumhara Bhi Meri Tarah Naam Ho Jayega\n" +
+                "Jab Tum Par Bhi Padenge Ande Aur Tamatar\n" +
+                "To Shaam Ki Sabji Ka Intajaam Ho Jayega…");
+        funny.add("Manzil ki taraf badhte raho.\n" +
+                "Jo dil kahe usi rah ko chuno,\n" +
+                "peeche walon ko age na jaane do\n" +
+                "aur jo aage hai unse aage niklo.\n" +
+                "Tabhi 1 acche Truck Driver banoge. ");
+        funny.add("khushbu ne phool ko khas banaya,\n" +
+                "phool ne mali ko khas banaya,\n" +
+                "chahat ne mohabbat ko khas banaya,\n" +
+                "kambakht mohabbat ne kitno ko devdas banaya…");
         System.out.println("Funny " + funny.size());
 
         bewafa = new ArrayList<>();
+        bewafa.add("पत्थरों से प्यार किया नादान थे हम,\n" +
+                "गलती हुई क्योकि इंशान थे हम,\n" +
+                "आज जिन्हें नज़रें मिलाने में तकलीफ होती हैं,\n" +
+                "कभी उसी शख्स की जान थे हम…..!!!");
         bewafa.add("अब के अब तस्लीम कर लें तू नहीं तो मैं सही,\n" +
                 "कौन मानेगा कि हम में से बेवफा कोई नहीं।");
         bewafa.add("मेरे फन को तराशा है सभी के नेक इरादों ने,\n" +
                 "किसी की बेवफाई ने किसी के झूठे वादों ने।");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
-        bewafa.add("");
+        bewafa.add("नहीं चाहिए कुछ भी तेरी इश्क़ कि दूकान से,\n" +
+                "हर चीज में मिलावट है बेवफाई कि......!!!");
+        bewafa.add("अगर इन आंसूओं की कुछ किमत होती,\n" +
+                "तो कल रात वाला तकिया अरबों में बिकता…..!!!");
+        bewafa.add("तुमने क्या सौचा कि तुम्हारे सिवा कोई नही मुझे चाहने वाला,\n" +
+                "पगली छोङ कर तो देख, मौत तैयार खङी है मुझे अपने सीने लगाने के लीऐ…!!!");
+        bewafa.add("तेरी वफाओं का समन्दर किसी और के लिए होगा,\n" +
+                "हम तो तेरे साहिल से रोज प्यासे ही गुजर जाते हैं......!!!");
+        bewafa.add("जब हुई थी मोहब्बत तो लगा किसी अच्छे काम का है सिला,\n" +
+                "खबर न थी के गुनाहों कि सजा ऐसे भी मिलती है....!!!");
+        bewafa.add("सोचा था की ख़ुदा के सिवा मुझे कोई बर्बाद कर नही सकता,\n" +
+                "फिर उनकी मोहब्बत ने मेरे सारे वहम तोड़ दिए…….!!!\n");
+        bewafa.add("तेरी मुहब्बत भी किराये के घर की तरह थी,\n" +
+                "कितना भी सजाया पर मेरी नहीं हुई….!!!");
+        bewafa.add("कैसे करूं मुकदमा उस पर उसकी बेवफाई का,\n" +
+                "कमबख्त ये दिल भी उसी का वकील निकला…...!!!");
+        bewafa.add("चूम कर कफ़न में लिपटें मेरे चेहरे को.. उसने तड़प के कहा,\n" +
+                "नए कपड़े क्या पहन लिए... हमें देखते भी नहीं....!!!");
+        bewafa.add("जाते जाते उसने पलटकर इतना ही कहा मुझसे,\n" +
+                "मेरी बेवफाई से ही मर जाओगे या मार के जाऊँ.....!!!");
+        bewafa.add("मुझे दफनाने से पहले मेरा दिल निकाल कर उसे दे देना,\n" +
+                "मैं नही चाहता के वो खेलना छोङ दे.....…!!!");
+        bewafa.add("मैंने आंसू को समझाया, भरी महफ़िल में ना आया करो,\n" +
+                "आंसू बोला, तुमको भरी महफ़िल में तन्हा पाते है,\n" +
+                "इसीलिए तो चुपके से चले आते है….!!!");
+        bewafa.add("ना आना लेकर उसे मेरे जनाजे में,\n" +
+                "मेरी मोहब्बत की तौहीन होगी,\n" +
+                "मैं चार लोगो के कंधे पर हूंगा,\n" +
+                "और मेरी जान पैदल होगी...!!!");
+        bewafa.add("तेरी आरज़ू मेरा ख्वाब है,\n" +
+                "जिसका रास्ता बहुत खराब है,\n" +
+                "मेरे ज़ख़्म का अंदाज़ा ना लगा,\n" +
+                "दिल का हर पन्ना दर्द की किताब है…..!!!");
+        bewafa.add("हमने दिल जो वापीस मांगा तो सिर जुका के बोले,\n" +
+                "वो तो टुंट गया युहि खेलते खेलते…….!!!");
+        bewafa.add("एक बेबफा के जख्मो पे मरहम लगाने हम गए,\n" +
+                "मरहम की कसम मरहम न मिला मरहम की जगह मर हम गए…!!!");
+        bewafa.add("खुशियाँ तो कब की रूठ गयी हैं काश की,\n" +
+                "इस ज़िन्दगी को भी किसी की नज़र लग जाये....!!!");
+        bewafa.add("काश वो नगमे सुनाए ना होते,\n" +
+                "आज उनको सुनकर ये आँसू आए ना होते,\n" +
+                "अगर इस तरह भूल जाना ही था,\n" +
+                "तो इतनी गहराई से दिल्मे समाए ना होते….!!!");
+        bewafa.add("काश बनाने वाले ने दिल कांच के बनाये होते,\n" +
+                "तोड़ने वाले के हाथ में ज़ख्म तो आये होते.....!!!");
+        bewafa.add("ऐ चांद चला जा क्यो आया है मेरी चौखट पर,\n" +
+                "छोड गये वो शख्स जिसकी याद मे हम तुझे देखा करते थे…..!!!");
+        bewafa.add("हौसला मुज में नहीं उसको भूलाने का,\n" +
+                "काम सदियों का लम्हों में कहाँ होता है.....!!!");
+        bewafa.add("बदलती चीज़ें हमेशा अच्छी लगती हैं... लेकिन,\n" +
+                "बदलते हुए अपने कभी अच्छे नहीं लगते....!!!");
+        bewafa.add("अजीब लोग बसते है तेरे शहेर मे जालीम,\n" +
+                "मरम्त कांच की करते है पथ्थर के औझार से......!!!");
+        bewafa.add("उसे ये कोन बतलाये... उसे ये कोन समझाए कि,\n" +
+                "खामोश रहने से ताल्लुक टूट जाते है....!!!");
+        bewafa.add("मेरी सब कोशिशें नाकाम थी उनको मनाने कि,\n" +
+                "कहाँ सीखीं है ज़ालिम ने अदाएं रूठ जाने कि....!!!");
+        bewafa.add("ज़िन्दगी ने आज कह दिया है मुझे,\n" +
+                "किसी और से प्यार है,\n" +
+                "मेरी मौत से पूछो,\n" +
+                "अब उसे किस बात का इंतज़ार है.....!!!");
+        bewafa.add("ऐ खुदा…!!\n" +
+                "तुजसे एक सवाल है मेरा,\n" +
+                "उसके चहेरे क्यूँ नहीं बदलते,\n" +
+                "जो इन्शान \"बदल\" जाते है.….!!!");
+        bewafa.add("मैं उसकी ज़िंदगी से \u200Bचला जाऊं यह उसकी दुआ थी,\n" +
+                "और उसकी हर दुआ पूरी हो यह मेरी दुआ थी.....!!!");
+        bewafa.add("बहुत अंदर तक तबाही मचा देता है,\n" +
+                "वो अश्क जो आँख से बह नहीं पाता.....!!!");
+        bewafa.add("ये भी अच्छा हुआ कि,\n" +
+                "कुदरत ने रंगीन नही रखे ये आँसू,\n" +
+                "वरना जिसके दामन में गिरते,\n" +
+                "वो भी… बदनाम हो जाता….!!!");
+        bewafa.add("इसी बात से लगा लेना मेरी शोहरत का अन्दाजा,\n" +
+                "वो मुझे सलाम करते है जिन्हे तु सलाम करती हैं......!!!");
+        bewafa.add("ऐ मेरा जनाज़ा उठाने वालो, देखना कोई बेवफा पास न हो,\n" +
+                "अगर हो तो उस से कहना, आज तो खुशी का मौका है, उदास न हो.....!!!");
+        bewafa.add("अब अपने ज़ख़्म दिखाऊँ किसे और किसे नहीं,\n" +
+                "बेगाने समझते नहीं और अपनो को दिखते नहीं…..!!!");
+        bewafa.add("किसी को इश्क़ की अच्छाई ने मार डाला,\n" +
+                "किसी को इश्क़ की गहराई ने मार डाला,\n" +
+                "करके इश्क़ कोई ना बच सका,\n" +
+                "जो बच गया उससे तन्हाई ने मार डाला.....!!!");
+        bewafa.add("चुपके चुपके पहले वो ज़िन्दगी में आते हैं,\n" +
+                "मीठी मीठी बातों से दिल में उतर जाते है,\n" +
+                "बच के रहना इन हुसन वालों से यारो,\n" +
+                "इन की आग में कई आशिक जल जाते हैं......!!!");
+        bewafa.add("चाँद उतरा था हमारे आँगन में,\n" +
+                "ये सितारों को गवाँरा ना हुआ,\n" +
+                "हम भी सितारों से क्या गिला करें,\n" +
+                "जब चाँद ही हमारा ना हुआ…....!!!");
+        bewafa.add("तू बदनाम ना हो,\n" +
+                "सिर्फ इसलिये जी रहा हूं मै,\n" +
+                "वरना तेरी चौखट पे मरने का,\n" +
+                "इरादा तो रोज़ ही होता है…..!!!");
+        bewafa.add("तड़पते है नींद के लिए तो यही दुआ निकलती है,\n" +
+                "बहुत बुरी है मोहबत,\n" +
+                "किसी दुश्मन को भी ना हो….....!!!");
+        bewafa.add("तेरे होते हुए भी तन्हाई मिली है,\n" +
+                "वफ़ा करके भी देखो बुराई मिली है,\n" +
+                "जितनी दुआ की तुम्हे पाने की,\n" +
+                "उस से ज़यादा तेरी जुदाई मिली है…...!!!");
+        bewafa.add("चिराग से न पूछो बाकि तेल कितना है,\n" +
+                "सांसो से न पूछो बाकि खेल कितना है,\n" +
+                "पूछो उस कफ़न में लिपटे मुर्दे से,\n" +
+                "जिन्दगी में गम और कफ़न में चैन कितना है.....!!!");
+        bewafa.add("याद हँ मुझे मेरे सारे गुनाह,\n" +
+                "एक मोहब्बत करली,\n" +
+                "दूसरा तुमसे कर ली,\n" +
+                "तीसरा बेपनह कर ली.......!!!");
+        bewafa.add("अपनी तो ज़िन्दगी है अजीब कहानी है,\n" +
+                "जिस चीज़ को चाह है वो ही बेगानी है,\n" +
+                "हँसते भी है तो दुनिया को हँसाने के लिए,\n" +
+                "वरना दुनिया डूब जाये इन आखों में इतना पानी है.....!!!");
+        bewafa.add("पलकों में आँसु और दिल में दर्द सोया है,\n" +
+                "हँसने वालो को क्या पता, रोने वाला किस कदर रोया है,\n" +
+                "ये तो बस वही जान सकता है मेरी तनहाई का आलम,\n" +
+                "जिसने जिन्दगी में किसी को पाने से पहले खोया है........!!!");
+        bewafa.add("कभी जिंदगी में किसी के लिये मत रोना,\n" +
+                "क्योंकि वो तुम्हारे आँसुओं के क़ाबिल ना होगा,\n" +
+                "और जो इन आँसुओं के क़ाबिल होगा, वह तुम्हें रोने ही नहीं देगा....!!!");
+        bewafa.add("कुछ इस तरह से वफ़ा की मिसाल देता हु,\n" +
+                "सवाल करता है कोई तो टाल देता हु,\n" +
+                "उसी से खाता हूँ अक्सर फरेब मंजिल का,\n" +
+                "मैं जिसके पाँव से काँटा निकाल देता हु…...!!!");
+        bewafa.add("याद नही करोगे तो भुला भी ना सकोगे,\n" +
+                "मेरा ख्याल ज़ेहन से मिटा भी ना सकोगे,\n" +
+                "एक बार जो तुम मेरे गम से मिलोगे,\n" +
+                "तो सारी उमर मुस्कुरा ना सकोगे.......!!!");
+        bewafa.add("ना तस्वीर है उसकी जो दिदार किया जाऐ,\n" +
+                "ना पास है वो जो उससे प्यार किया जाऐ,\n" +
+                "ये कैसा दर्द दिया उस बेदर्द ने,\n" +
+                "ना उससे कुछ कहा जाऐ... ना उसके बिन रहा जाऐ.....!!!");
+        bewafa.add("जीना चाहता हूँ मगर जिदगी राज़ नहीं आती,\n" +
+                "मरना चाहता हूँ मगर मौत पास नहीं आती,\n" +
+                "उदास हु इस जिनदगी से,\n" +
+                "क्युकी उसकी यादे भी तो तरपाने से बाज नहीं आती....!!!");
+        bewafa.add("कोई वादा नहीं फिर भी प्यार है,\n" +
+                "जुदाई के बावजूद भी तुझपे अधिकार है,\n" +
+                "तेरे चेहरे की उदासी दे रही है गवाही,\n" +
+                "मुझसे मिलने को तू भी बेक़रार है.....!!!");
         System.out.println("Bewafa " + bewafa.size());
 
         sad = new ArrayList<>();
@@ -1540,118 +1878,308 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "मेरे लिए भी क्या कोई उदास बेक़रार है।");
         sad.add("वो तेरे खत तेरी तस्वीर और सूखे फूल,\n" +
                 "उदास करती हैं मुझ को निशानियाँ तेरी।");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
-        sad.add("");
+        sad.add("तुम न जाने किस जहाँ में खो गए.....\n" +
+                "\n"+
+                "हम भरी दुनिया में तन्हा हो गए..");
+        sad.add("पता नही होश मे हूँ.....\n" +
+                "या बेहोश हूँ मैं.....\n" +
+                "पर बहूत सोच .......\n" +
+                "समझकर खामोश हूँ मैं.");
+        sad.add("सब कुछ हासिल नहीं होता ज़िन्दगी में यहाँ ,\n" +
+                "\n" +
+                "किसी का \"काश\" तो किसी का \"गर\" छूट ही जाता है ...");
+        sad.add("वो बिछड़ के हमसे ये दूरियां कर गई,\n" +
+                "न जाने क्यों ये मोहब्बत अधूरी कर गई,\n" +
+                "अब हमे तन्हाइयां चुभती है तो क्या हुआ,\n" +
+                "कम से कम उसकी सारी तमन्नाएं तो पूरी हो गई।");
+        sad.add("न मिले किसी का साथ तो हमें याद करना,\n" +
+                "तन्हाई महसूस हो तो हमें याद करना,\n" +
+                "खुशियाँ बाटने के लियें दोस्त हजारो रखना,\n" +
+                "जब ग़म बांटना हो तो हमें याद करना।");
+        sad.add("वो छोड़ के गए हमें,\n" +
+                "न जाने उनकी क्या मजबूरी थी,\n" +
+                "खुदा ने कहा इसमें उनका कोई कसूर नहीं,\n" +
+                "ये कहानी तो मैंने लिखी ही अधूरी थी।");
+        sad.add("दिल से रोये मगर होंठो से मुस्कुरा बेठे,\n" +
+                "यूँ ही हम किसी से वफ़ा निभा बेठे,\n" +
+                "वो हमे एक लम्हा न दे पाए अपने प्यार का,\n" +
+                "और हम उनके लिये जिंदगी लुटा बेठे!");
+        sad.add("उल्फत का अक्सर यही दस्तूर होता हैं,\n" +
+                "जिसे चाहो वही दूर होता है...\n" +
+                "दिल टूट कर बिखरते हैं इस कदर...\n" +
+                "जैसे कोई कांच का खिलौना चूर चूर होता है...");
+        sad.add("दिल में हर राज़ दबा कर रखते है,\n" +
+                "होंटो पर मुस्कुराहट सजाकर रखते है,\n" +
+                "ये दुनिया सिर्फ खुशी में साथ देती है,\n" +
+                "इसलिए हम अपने आँसुओ को छुपा कर रखते है।");
+        sad.add("चाहते इतनी जल्दी खत्म नही होती..\n" +
+                "मिलने के सिलसिले भले खत्म हो जाये ।।");
+        sad.add("रिवाज तो यही है दुनिया का,\n" +
+                "मिल जाना और बिछड़ जाना…\n" +
+                "पर जाने तुझ से ये कैसा रिश्ता है,\n" +
+                "ना मिलती हो ना बिछड़ती हो |");
+        sad.add("हो सकता है हमने आपको कभी रुला दिया,\n" +
+                "आपने तो दुनिया के कहने पे हमें भुला दिया,\n" +
+                "हम तो वैसे भी अकेले थे इस दुनिया में,\n" +
+                "क्या हुआ अगर आपने एहसास दिला दिया।");
+        sad.add("मैंने कुछ इस तरह से खुद को संभाला है,\n" +
+                "तुझे भुलाने को दुनिया का भरम पाला है,\n" +
+                "अब किसी से मुहब्बत मैं नहीं कर पाता,\n" +
+                "इसी सांचे में एक बेवफा ने मुझे ढाला है..");
+        sad.add(" किस्मत बुरी या मैं बुरा यही फैसला न हो सका,\n" +
+                "मैं हर किसी का हो गया, बस कोई मेरा न हो सका...!!!\n");
+        sad.add("मेरी यादें मेरा चेहरा मेरी बातें रुलायेंगी,\n" +
+                "हिज़्र के दौर में गुज़री मुलाकातें रुलायेंगी,\n" +
+                "दिनों को तो चलो तुम काट भी लोगे फसानों मे,\n" +
+                "जहाँ तन्हा मिलोगे तुम तुम्हे रातें रुलायेंगी|");
+        sad.add("मेरे मिज़ाज को समझने के लिए,\n" +
+                "बस इतना ही काफी है,\n" +
+                "मैं उसका हरगिज़ नहीं होता…..\n" +
+                "जो हर एक का हो जाये।");
+        sad.add("कोई रास्ता नही दुआ के सिवा,\n" +
+                "कोई सुनता नही खुदा के सिवा,\n" +
+                "मैने भी ज़िंदगी को करीब से देखा है मेरे दोस्त,\n" +
+                "मुस्किल मे कोई साथ नही देता आँसू के सिवा..|");
+        sad.add("न पूछो हालत मेरी रूसवाई के बाद,\n" +
+                "मंजिल खो गयी है मेरी, जुदाई के बाद,\n" +
+                "नजर को घेरती है हरपल घटा यादों की,\n" +
+                "गुमनाम हो गया हूँ गम-ए-तन्हाई के बाद..|");
+        sad.add("टूटा हुआ फूल खुशबू दे जाता हैं\n" +
+                "बिता हुआ पल यादें दे जाता हैं\n" +
+                "हर शख्स का अपना अंदाज़ होता हैं\n" +
+                "कोई ज़िन्दगी में प्यार तोह..\n" +
+                "कोई प्यार में ज़िदंगी दे जाता हैं |");
+        sad.add("आज उस ने एक दर्द दिया तो मुझे याद आया,\n" +
+                "हमने ही दुआओं में उसके सारे दर्द माँगे थे।");
+        sad.add("चलो मान लेता हुँ के..\n" +
+                "मुझे मोहब्बत करनी नहीं आती,\n" +
+                "लेकिन आप तो ये बताओ..\n" +
+                "आप को दिल तोडना किसने सीखाया।");
+        sad.add(" ज़िंदगी है थोड़ा आहिस्ता चल,\n" +
+                "कट ही जाएगा सफ़र आहिस्ता चल,\n" +
+                "एक अंधी दौड़ है किस को ख़बर,\n" +
+                "कौन है किस राह पर आहिस्ता चल!\n");
+        sad.add("आखिर गिरते हुए आँसू ने पूछ ही लिया,\n" +
+                "मुझसे गिरा दिया न, मुझे उसके लिए?\n" +
+                "जिसके लिए तू कुछ भी नही।");
+        sad.add(" थोड़ा गम मिला तो घबरा के पी गए,\n" +
+                "थोड़ी ख़ुशी मिली तो मिला के पी गए,\n" +
+                "यूँ तो हमें न थी ये पीने की आदत,\n" +
+                "शराब को तनहा देखा तो तरस खा के पी गए..|\n");
+        sad.add("बातें तो हर कोई समझ लेता है पर वो इंसान चाहिए\n" +
+                "जो मेरी ख़ामोशी को समझे..");
+        sad.add("मुझ को अब तुझ से भी मोहब्बत नहीं रही,\n" +
+                "ऐ ज़िंदगी तेरी भी मुझे ज़रूरत नहीं रही,\n" +
+                "बुझ गये अब उस के इंतेज़ार के वो जलते दिए,\n" +
+                "कहीं भी आस-पास उस की आहट नहीं रही|");
+        sad.add("महफील भी रोयेगी, हर दिल भी रोयेगा,\n" +
+                "ङुबी जो मेरी कस्ती तो साहील भी रोयेगा,\n" +
+                "हम इतना प्यार बीखेर देगे इस दुनीया मे के,\n" +
+                "मेरी मौत पे मेरा कातील भी रोयेगा……!!");
+        sad.add("उसकी हर एक शिकायत देती है मुहब्बत की गवाही..\n" +
+                "अजनबी से वर्ना कौन हर बात पर तकरार करता है ?");
+        sad.add("हो चुके अब तुम किसी के,\n" +
+                "कभी मेरी जिंदगी थे तुम...\n" +
+                "भूलता है कौन मोहब्बत पहली,\n" +
+                "मेरी तो साडी ख़ुशी थे तुम....");
+        sad.add("बिछड़ के तुमसे तुम्हे बेवफा तो कह दिया मैंने,\n" +
+                "हकीकत तो ये है के हर आईने में हम बस खुद ही को गुनहगार प|ते है.");
+        sad.add(" हद से बढ़ जाए ताल्लुक तो गम मिलते हैं,\n" +
+                "हम इसी वास्ते हर शख्स से कम मिलते हैं!!!\n");
+        sad.add(" निशां उनके कदमों के छप गए अब दिल पे मेरे,\n" +
+                "कुछ इस कदर वो तन्हा छोड़ गए मुझे जिंदगी में मेरे,\n" +
+                "यादों में उनके गुजरती हैं करवटों और अश्कों में रातें,\n" +
+                "आकर जिंदगी में मेरी खुशियों के वजह जो थे मेरे..\n");
+        sad.add("कभी कभी कितनी बातें होती हैं कहने को...\n" +
+                "जब कोई सुनने वाला नहीं होता है!!!");
+        sad.add("ना प्यार कम हुआ है ना ही प्यार का अहेसास,\n" +
+                "बस उसके बिना जिन्दगी काटने की आदत हो गई है !!");
+        sad.add("वो कहते हैं हम जी लेंगे खुशी से तुम्हारे बिना,\n" +
+                "हमें डर है वो टूटकर बिखर जायेंगे हमारे बिना।");
+        sad.add("वो दर्द ही क्या जो आँखों से बह जाए,\n" +
+                "वो खुशी ही क्या जो होठों पर रह जाए,\n" +
+                "कभी तो समझो मेरी खामोशी को,\n" +
+                "वो बात ही क्या जो लफ्ज़ आसानी से कह जायें |");
+        sad.add("गुनहगारों की आँखों में झूठे ग़ुरूर होते हैं,\n" +
+                "यहाँ शर्मिन्दा तो सिर्फ़ बेक़सूर होते हैं..!");
+        sad.add("दिल का दर्द एक राज बनकर रह गया,\n" +
+                "मेरा भरोसा मजाक बनकर रह गया,\n" +
+                "दिल के सोदागरो से दिल्लगी कर बैठे,\n" +
+                "शायद इसीलिए मेरा प्यार इक अल्फाज बनकर रह गया।");
+        sad.add("मोहबत को जो निभाते हैं उनको मेरा सलाम है,\n" +
+                "और जो बीच रास्ते में छोड़ जाते हैं उनको,\n" +
+                "हमारा ये पेघाम हैं..\n" +
+                "वादा-ए-वफ़ा करो तो फिर खुद को फ़ना करो,\n" +
+                "वरना खुदा के लिए किसी की ज़िंदगी ना तबाह करो!");
+        sad.add("इश्क़ में कब ये ज़रूरी है कि रोया जाए\n" +
+                "ये नहीं दाग़-ए-नदामत जिसे धोया जाए");
+        sad.add(" तेरी बेरूख़ी को भी रुतबा दिया हमने,\n" +
+                "प्यार का हर फ़र्ज़ अदा किया हमने,\n" +
+                "मत सोच के हमने भुला दिया तुम तुझे,\n" +
+                "आज भी भगवान से पहले तुझे याद किया हमने |");
+        sad.add("एक आदत सी हो गयी है चोट खाने की\n" +
+                "भीगी हुए पलकों संग मुस्कुराने की,\n" +
+                "काश अंजाम वफ़ा का पहले ही जानते..\n" +
+                "तो कोशिश भी नहीं करते दिल लगाने की |");
+        sad.add("मेरी खामोशी थी जो सबकुछ सह गयी,\n" +
+                "उसकी यादें ही अब इस दिल में रह गयी,\n" +
+                "थी शायद उसकी भी कोई मज़बूरी,\n" +
+                "जो मेरी जिंदगी की कहानी अधूरी ही रह गयी |");
+        sad.add("रोज़ ख्वाबों में जीता हूँ वो ज़िन्दगी …\n" +
+                "जो तेरे साथ मैंने हक़ीक़त में सोची थी .");
+        sad.add("बिकती है ना ख़ुशी कहीं, ना कहीं गम बिकता है.\n" +
+                "लोग गलतफहमी में हैं, कि शायद कहीं मरहम बिकता है..");
+        sad.add(" हो जाऊ तुमसे दूर फिर मौहब्बत किससे करूं,\n" +
+                "तुम हो जाओ नाराज फिर शिकायत किससे करूं,\n" +
+                "इस दिल में कुछ भी नहीं तुम्हारी चाहतों के सिवा,\n" +
+                "अगर तुम्हें ही भूला दूं तो फिर प्यार किसे करूं |");
+        sad.add("मेरी खामोशियों में भी फसाना ढूँढ लेती है,\n" +
+                "बड़ी शातिर है दुनिया मजा लेने का बहाना ढ़ूँढ लेती है");
+        sad.add("रब किसी को किसी पर फ़िदा ना करे,\n" +
+                "करे तो कयामत तक जुदा ना करे ,\n" +
+                "ये माना की कोई मरता नहीं जुदाई में,\n" +
+                "लेकिन जी भी नहीं पाता तन्हाई में ..");
+        sad.add("हम भूल जाये ऐसी दिल की हसरत कहाँ,\n" +
+                "वो याद करे हमे इतनी उसे फुर्सत कहाँ,\n" +
+                "जिनके चारो तरफ हो अपनों का साथ,\n" +
+                "उन्हें हमारी जरुरत कहाँ..");
+        sad.add("एक स्टेशन जैसी है जिन्दगी मेरी,\n" +
+                "यहाँ लोग तो बहुत है पर अपना कोई नहीं ।। ");
+        sad.add("कोई चाहत की बात करता है\n" +
+                "तो कोई चाहने की…।।।\n" +
+                "हम दोनोँ आज़मा के बैठे हैँ..\n" +
+                "ना चाहत मिली..ना तो चाहने वाले.!!");
+        sad.add("बेवफाई उसकी दिल से मिटा के आया हूँ,\n" +
+                "ख़त भी उसके पानी में बहा के आया हूँ,\n" +
+                "कोई पढ़ न ले उस बेवफा की यादों को,\n" +
+                "इसलिए पानी में भी आग लगा कर आया हूँ..");
+        sad.add("खुशियों की दामन में आँसू गिराकर तो देखिये,\n" +
+                "ये रिश्ता कितना सच्चा है आजमा कर तो देखिये,\n" +
+                "आपके रूठने से क्या होगी मेरे दिल की हालत,\n" +
+                "किसी आइने पर पत्थर गिराकर तो देखिये..");
+        sad.add("चल हो गया फैसला कुछ कहना ही नहीं …\n" +
+                "तू जी ले मेरे बगैर मुझे जीना ही नहीं..");
+        sad.add("कभी उसने भी हमें चाहत का पैगाम लिखा था\n" +
+                "सब कुछ उसने अपना हमारे नाम लिखा था\n" +
+                "सुना है आज उनको हमारे जिक्र से भी नफ़रत है\n" +
+                "जिसने कभी अपने दिल पर हमारा नाम लिखा था...");
+        sad.add("चल हो गया फैसला कुछ कहना ही नहीं …\n" +
+                "तू जी ले मेरे बगैर मुझे जीना ही नहीं..");
+        sad.add("अब उसके साथ रहूँ या फिर उस से किनारा कर लूँ,\n" +
+                "जरा ठहर जा ऐ दिल मैं ये फैसला दोबारा कर लूँ।");
+        sad.add("मज़बूरी में जब कोई जुदा होता है,\n" +
+                "ज़रूरी नहीं कि वो बेवफ़ा होता है,\n" +
+                "देकर वो आपकी आँखों में आँसू,\n" +
+                "अकेले में आपसे ज्यादा रोता है।");
+        sad.add("तड़प के देख किसी की चाहत में,\n" +
+                "तो पता चले कि इंतज़ार क्या होता है,\n" +
+                "यूँ मिल जाए अगर कोई बिना तड़प के,\n" +
+                "तो कैसे पता चले कि प्यार क्या होता है ?");
+        sad.add("तेरे रोने से उन्हें कोई फर्क नहीं पड़ता ऐ दिल..\n" +
+                "जिनके चाहने वाले ज्यादा हो..वो अक्सर बे दर्द हुआ करते हैं");
+        sad.add("लोग कहते हैं किसी एक के चले जाने\n" +
+                "से जिन्दगी अधूरी नहीं होती,\n" +
+                "लेकिन लाखों के मिल जाने से\n" +
+                "उस एक की कमी पूरी नहीं होती है……");
+        sad.add("वादो से बंधी जंजीर थी\n" +
+                "जो तोड दी मैँने,\n" +
+                "अब से जल्दी सोया करेंगे ,\n" +
+                "मोहब्बत छोड दी मैँने….");
+        sad.add("बहुत उदास है कोई शख्स तेरे जाने से,\n" +
+                "हो सके तो लौट के आजा किसी बहाने से,\n" +
+                "तू लाख खफा हो पर एक बार तो देख ले,\n" +
+                "कोई बिखर गया है तेरे रूठ जाने से।");
+        sad.add("वक़्त भी लेता है करवटे ना जाने कैसे-कैसे;\n" +
+                "उम्र इतनी तो नहीं थी, जितने सबक सीख लिए मैंने।");
         System.out.println("Sad " + sad.size());
 
 
         judai = new ArrayList<>();
+        judai.add("मैंने कुछ इस तरह से खुद को संभाला है,\n" +
+                "तुझे भुलाने को दुनिया का भरम पाला है,\n" +
+                "अब किसी से मुहब्बत मैं नहीं कर पाता,\n" +
+                "इसी सांचे में एक बेवफा ने मुझे ढाला है..");
+        judai.add("कैसे मिलेंगे हमें चाहने वाले बताइये,\n" +
+                "दुनिया खड़ी है राह में दीवार की तरह,\n" +
+                "वो बेवफ़ाई करके भी शर्मिंदा ना हुए,\n" +
+                "सजाएं मिली हमें गुनहगार की तरह..");
+        judai.add("कोई रास्ता नही दुआ के सिवा, कोई सुनता नही खुदा के सिवा, मैने भी ज़िंदगी को करीब से देखा है मेरे दोस्त, मुस्किल मे कोई साथ नही देता आँसू के सिवा.");
+        judai.add("वो तो अपना दर्द रो-रो कर सुनाते रहे, हमारी तन्हाइयों से भी आँख चुराते रहे, हमें ही मिल गया खिताब-ए-बेवफा क्योंकि, हम हर दर्द मुस्कुरा कर छुपाते रहे।");
+        judai.add("सांसो का पिंजरा किसी दिन टूट जायेगा\n" +
+                "ये मुसाफिर किसी राह में छूट जायेगा\n" +
+                "अभी जिन्दा हु तो बात क्र लिया करो ।\n" +
+                "क्याब पता कब हम से खुदा रूठ जायेगा ||");
+        judai.add("यार के रास्ते बेवफा हो नहीं सकते\n" +
+                "हम आपसे खफा हो नहीं सकते\n" +
+                "आप बेशक हमें भूल कर सो जाओ\n" +
+                "मगर हम आपको याद किये बिना सो नहीं सकते ||");
+        judai.add("कभी उसने भी हमें चाहत का पैगाम लिखा था,\n" +
+                "सब कुछ उसने अपना हमारे नाम लिखा था,\n" +
+                "सुना हैं आज उनको हमारे जिक्र से भी नफ़रत है,\n" +
+                "जिसने कभी अपने दिल पर हमारा नाम लिखा था..");
+        judai.add("इतना भी करम उनका कोई कम तो नहीं है,\n" +
+                "गम देके वो पूछे हैं कोई गम तो नहीं है,\n" +
+                "चल मान लिया तेरा कोई दोष नहीं है,\n" +
+                "हालांकि दलीलों में तेरी दम तो नहीं है.");
+        judai.add("दिल से तेरी याद को जुदा तो नहीं किया,\n" +
+                "रखा जो तुझे याद कुछ बुरा तो नहीं किया,\n" +
+                "हम से तू नाराज़ हैं किस लिये बता जरा,\n" +
+                "हमने कभी तुझे खफा तो नहीं किया।");
+        judai.add("प्यार करो तो हमेशा मुस्कुरा के, किसी को धोखा ना दो अपना बना के, कर लो याद जब तक हम ज़िंदा है, फिर ना कहना की चले गये दिल मे यादें बसा के…");
+        judai.add("    मुझे उससे कोई शिकायत ही नहीं, शायद हमारी किसमत में चाहत ही नहीं, मेरी तकदीर को लिखकर खुदा भी मुकर गया, पूछा तो बोला ये मेरी लिखावट ही नही");
+        judai.add("मुझे उससे कोई शिकायत ही नहीं, शायद हमारी किसमत में चाहत ही नहीं, मेरी तकदीर को लिखकर खुदा भी मुकर गया, पूछा तो बोला ये मेरी लिखावट ही नही");
+        judai.add("वो ज़िंदगी ही क्या जिसमे मोहब्बत नही,\n" +
+                "#वो मोहबत ही क्या जिसमे यादें नही,\n" +
+                "वो यादें क्या जिसमे तुम नही,\n" +
+                "और वो तुम ही क्या जिसके साथ हम नही!!!");
+        judai.add("वफ़ा का दरिया कभी रुकता नही,\n" +
+                "इश्क़ में प्रेमी कभी झुकता नही,\n" +
+                "खामोश हैं हम किसी के खुशी के लिए,ना सोचो के हमारा दिल दुःखता नहीं!");
+        judai.add("लबों की हँसी आपके नाम कर देंगे,\n" +
+                "हर खुशी आप पर कुर्बान कर देंगे,\n" +
+                "जिस दिन होगी कमी मेरे प्यार में,\n" +
+                "उस दिन हम इस दुनिया को सलाम कर देंगे !!");
+        judai.add("प्यार कमजोर दिल से किया नहीं जा सकता,\n" +
+                "ज़हर दुश्मन से लिया नहीं जा सकता,\n" +
+                "दिल में बसी है उल्फत जिस प्यार की,\n" +
+                "उस के बिना जिया नहीं जा सकता !!");
+        judai.add("तेरा एहसान हम कभी चुका नहीं सकते,\n" +
+                "तू अगर माँगे जान तो इंकार कर नहीं सकते,\n" +
+                "माना की ज़िंदगी लेती है इम्तिहान बहुत,\n" +
+                "तू अगर हो हमारे साथ तो हम कभी हार नहीं सकते !!");
+        judai.add("मोहब्बत भी अजीब चीज़ बनाई तूने,\n" +
+                "तेरी ही मस्ज़िद मे, तेरे ही मंदिर मे,\n" +
+                "तेरे ही बंदे, तेरे ही सामने रोते हे,\n" +
+                "पर तुजे नही, किसी ओर को पाने के लिए.");
+        judai.add("दिल ले कर दिल तोड़ देना, ये प्यार का इनाम ना हो,\n" +
+                "प्यार हो ऐसा जिस पर कोई इलज़ाम ना हो,\n" +
+                "अगर कोई किसी का दिल ना तोड़े तो,\n" +
+                "यह प्यार कभी बदनाम ना हो !!");
         judai.add("दिल से निकली ही नहीं शाम जुदाई वाली,\n" +
                 "तुम तो कहते थे बुरा वक़्त गुज़र जाता है।");
         judai.add("जुदा हुए हैं बहुत से लोग एक तुम भी सही,\n" +
                 "अब इतनी सी बात पे क्या जिंदगी हैरान करें।");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
-        judai.add("");
+        judai.add("न जाने क्यों हमें आँसू बहाना नहीं आता, न जाने क्यों हाल-ऐ-दिल बताना नहीं आता, क्यों सब दोस्त बिछड़ गए हमसे, शायद हमें ही साथ निभाना नहीं आता।");
+        judai.add("जो मेरा था वो मेरा हो नहीं पाया, आँखों में आंसू भरे थे पर मैं रो नहीं पाया, एक दिन उन्होंने मुझसे कहा कि, हम मिलेंगे ख़्वाबों में पर मेरी बदकिस्मती तो देखिये, उस रात तो मैं ख़ुशी के मारे सो भी नहीं पाया।");
+        judai.add("हम उम्मीदों की दुनियां बसाते रहे;\n" +
+                "वो भी पल पल हमें आजमाते रहे;\n" +
+                "जब मोहब्बत में मरने का वक्त आया;\n" +
+                "हम मर गए और वो मुस्कुराते रहे।");
+        judai.add("आज तेरी याद हम सीने से लगा कर रोये, तन्हाई मैं तुझे हम पास बुला कर रोये, कई बार पुकारा इस दिल ने तुम्हें, और हर बार तुम्हें ना पाकर हम रोये।");
+        judai.add("एक अजीब सा मंजर नज़र आता है, हर एक आँसूं समंदर नज़र आता है, कहाँ रखूं मैं शीशे सा दिल अपना, हर किसी के हाथ मैं पत्थर नज़र आता है।");
+        judai.add("जो नजर से गुजर जाया करते हैं;\n" +
+                "वो सितारे अक्सर टूट जाया करते हैं;\n" +
+                "कुछ लोग दर्द को बयां नहीं होने देते,\n" +
+                "बस चुपचाप बिखर जाया करते हैं।");
+        judai.add("कांटो सी चुभती है तन्हाई, अंगारों सी सुलगती है तन्हाई, कोई आ कर हम दोनों को ज़रा हँसा दे, मैं रोता हूँ तो रोने लगती है तन्हाई।");
+        judai.add("हर ख़ुशी के पहलू हाथों से छूट गए, अब तो खुद के साये भी हमसे रूठ गए, हालात हैं अब ऐसे ज़िंदगी में हमारी, प्यार की राहों में हम खुद ही टूट गए।");
+        judai.add("न वो सपना देखो जो टूट जाये, न वो हाथ थामो जो छूट जाये, मत आने दो किसी को करीब इतना, कि उसके दूर जाने से इंसान खुद से रूठ जाये।");
+        judai.add("एक लफ्ज़ उनको सुनाने के लिए, कितने अल्फ़ाज़ लिखे हमने ज़माने के लिए, उनका मिलना ही मुक़द्दर में न था, वर्ना क्या कुछ नहीं किया उनको पाने के लिए।");
+        judai.add("क्यों तुझी को देखना चाहती हैं मेरी आँखें, क्यों खामोशियाँ करती बस हैं तेरी बातें, क्यों इतना चाहने लगा हूँ तुझको मैं, की तारे गिनते हुए कटती हैं मेरी रातें, तू ही कुछ बता दे क्या मैं करूँ इनका, हर पल जो मुझे तड़पाती हैं तेरी यादें!! ");
+        judai.add("महक उठती हैं हवाएं भी सिर्फ तेरी यादों से, बता मेरे प्यार को गुलाबों की जरूरत क्या है!! ना चाहा था कभी कुछ, तुम्हें चाहने से पहले, तुम मिल जो गए, ख्वाहिशे पूरी हो गई!! तेरी मोहब्बत मे एक बात सीखी है, तेरी साथ के बिना ये सारी दुनिया फीकी है!! ");
+        judai.add("आप खुद नही जानते आप कितने प्यारे हो, जान हो हमारी पर जान से प्यारे हो, दूरियों के होने से कोई फ़र्क नही पड़ता, आप कल भी हमारे थे और आज भी हमारे हो!! ");
+        judai.add("रिश्तों की डोरी तब कमजोर होती है जब इंसान ग़लतफहमी में पैदा होने वाले सवालों का जवाब खुद ही बना लेता है");
+        judai.add("दिल के सागर में लहरें उठाया ना करो, ख्वाब बनकर नींद चुराया ना करो, बहुत चोट लगती है मेरे दिल को, तुम ख्वाबो में आकर युँ तडपाया ना करो.");
         System.out.println("Judai " + judai.size());
 
         good_morning = new ArrayList<>();
@@ -1664,17 +2192,57 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "प्यारी सी सुबह कर रही है तुम्हारा इंतज़ार,\n" +
                 "अब तो जाग जाओ और खोल दो आँखें,\n" +
                 "हमारा एस.एम.एस. ले कर आया है ढेर सारा प्यार।");
-        good_morning.add("");
-        good_morning.add("");
-        good_morning.add("");
-        good_morning.add("");
-        good_morning.add("");
-        good_morning.add("");
-        good_morning.add("");
-        good_morning.add("");
-        good_morning.add("");
-        good_morning.add("");
-        good_morning.add("");
+        good_morning.add("अर्ज किया है,\n" +
+                "चाय के कप से उठते धुए में तेरी सकल नजर आती है,\n" +
+                "ऐसे खो जाते है तेरे खयालों में कि,\n" +
+                "अकसर मेरी चाय ठंडी हो जाती है…...!!!\n" +
+                "\"सुप्रभात\"");
+        good_morning.add("ना किसी के आभाव में जियो,\n" +
+                "ना किसी के प्रभाव में जियो,\n" +
+                "ज़िन्दगी आपकी है बस अपने, \n" +
+                "मस्त स्वभाव में जियो..........!!!\n" +
+                "\"सुप्रभात\"");
+        good_morning.add("ताज़ी हवा में फूलो की महक हो,\n" +
+                "पहली किरण में चिडियों की चहक हो,\n" +
+                "जब भी खोलो तुम अपनी पलके,\n" +
+                "उन पलकों में बस खुशियों की झलक हो…..!!!\n" +
+                "\"Have A Beautiful Day\"");
+        good_morning.add("ये हमारी सूर्योदय SMS सेवा है,\n" +
+                "इसमें हम सोए हुए आलसी लोगों को जगाते हैं,\n" +
+                "और बाद में गुड मॉर्निंग कह कर खुद सो जाते हैं......!!!\n" +
+                "\"सुप्रभात\"");
+        good_morning.add("हर सुबह तेरी मुस्कुराती रहे,\n" +
+                "हर शाम तेरी गुनगुनाती रहें,\n" +
+                "मेरी दुआ हैं की तू जिस भी मिलें,\n" +
+                "हर मिलने वाले को तेरी याद सताती रहें…...!!!\n" +
+                "\"सुप्रभात\"");
+        good_morning.add("रात गुजारी फिर महकती सुबह आई,\n" +
+                "दिल धड़का फिर तुम्हारी याद आई,\n" +
+                "आँखों ने महसूस किया उस हवा को,\n" +
+                "जो तुम्हें छु कर हमारे पास आई.........!!!\n" +
+                "\"सुप्रभात\"");
+        good_morning.add("हर सुबह की धुप कुछ याद दिलाती हैं,\n" +
+                "हर फूल की खुशबू एक जादू जगाती हैं, \n" +
+                "चाहू ना…. चाहू कितना भी यार,\n" +
+                "सुबह सुबह आपकी याद आ ही जाती हैं........!!!\n" +
+                "\"सुप्रभात\"");
+        good_morning.add("फूलों ने अमृत का जाम भेजा हैं,\n" +
+                "सूरज ने गगन से सलाम भेजा हैं,\n" +
+                "मुबारक हो आपको नयी सुबह,\n" +
+                "तहे दिल से हमने ये पैगाम भेजा हैं........!!!\n" +
+                "\"सुप्रभात\"");
+        good_morning.add("ख़ूबसूरत हो जाती है वो सुबह,\n" +
+                "जब आपकी Morning wish आ जाती है........!!!\n" +
+                "\"Have A Nice Day\"");
+        good_morning.add("न मंदिर न भगवान, न पूजा न स्नान,\n" +
+                "सुबह उठते ही पहला काम,\n" +
+                "एक SMS तुम्हारे नाम........!!!\n" +
+                "\"सुप्रभात\"");
+        good_morning.add("सुबह का हर पल ज़िंदगी दे आपको,\n" +
+                "दिन का हर लम्हा खुशी दे आपको,\n" +
+                "जहा गम की हवा छू कर भी न गुज़रे,\n" +
+                "खुदा वो जन्नत से ज़मीन दे आपको.......!!!\n" +
+                "\"Good Morning\"");
         good_morning.add("");
         good_morning.add("");
         good_morning.add("");
@@ -1717,10 +2285,23 @@ public class TopicShayariActivity extends AppCompatActivity {
                 "गुजर रही है ये रात आपकी याद में,\n" +
                 "कभी तो आपको भी हमारा इंतज़ार होगा।\n" +
                 "शुभरात्रि");
-        good_night.add("");
-        good_night.add("");
-        good_night.add("");
-        good_night.add("");
+        good_night.add("रात का चाँद आसमान में निकल आया है,\n" +
+                "साथ में तारों की बारात लाया है,\n" +
+                "ज़रा आसमान की ओर देखो वो आपको,\n" +
+                "मेरी और से Good Night कहने आया है...........!!!");
+        good_night.add("देखो फिर रात आ गयी,\n" +
+                "गुड नाइट कहने की बात याद आ गयी,\n" +
+                "हम बैठे थे सितारो की पनाह में,\n" +
+                "चाँद को देखा तो आप की याद आ गयी.....!!!");
+        good_night.add("आप हमारे सबसे अच्छे दोस्त हैं,\n" +
+                "यह दिल से कहते हैं हम,\n" +
+                "इसीलिए आपको रोज़ याद करतें हैं हम,\n" +
+                "बाकी कुछ कहें या ना कहें,\n" +
+                "रोज़ रात को आप को \"Good Night\" कहते हैं हम......!!!");
+        good_night.add("मुझे सुलाने के खातिर जब रात आती है,\n" +
+                "हम सो नही पाते रात खुद सो जाती है,\n" +
+                "पूछने पे दिल से ये आवाज़ आती है,\n" +
+                "आज दोस्त को याद कर ले रात तो रोज आती है.......!!!");
         good_night.add("");
         good_night.add("");
         good_night.add("");
@@ -2307,6 +2888,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 curIndex = index[0];
                 uniqueText = topic + "_" + curIndex;
 
+                mAdView1.loadAd(adRequest);
+                mAdView2.loadAd(adRequest2);
+
                 if (mAuth.getCurrentUser() != null) {
                     String uid = mAuth.getCurrentUser().getUid();
                     mRef = mDatabase.getReference().child(uid).child("favourite_shayari").child(uniqueText);
@@ -2350,6 +2934,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 curShayari = finalShayariList.get(index[0]);
                 curIndex = index[0];
                 uniqueText = topic + "_" + curIndex;
+
+                mAdView1.loadAd(adRequest);
+                mAdView2.loadAd(adRequest2);
 
                 if (mAuth.getCurrentUser() != null) {
                     String uid = mAuth.getCurrentUser().getUid();
@@ -2414,6 +3001,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 curIndex = index[0];
                 uniqueText = topic + "_" + curIndex;
 
+                mAdView1.loadAd(adRequest);
+                mAdView2.loadAd(adRequest2);
+
                 if (mAuth.getCurrentUser() != null) {
                     String uid = mAuth.getCurrentUser().getUid();
                     mRef = mDatabase.getReference().child(uid).child("favourite_shayari").child(uniqueText);
@@ -2457,6 +3047,9 @@ public class TopicShayariActivity extends AppCompatActivity {
                 curIndex = index[0];
                 uniqueText = topic + "_" + curIndex;
 
+                mAdView1.loadAd(adRequest);
+                mAdView2.loadAd(adRequest2);
+
                 if (mAuth.getCurrentUser() != null) {
                     String uid = mAuth.getCurrentUser().getUid();
                     mRef = mDatabase.getReference().child(uid).child("favourite_shayari").child(uniqueText);
@@ -2499,12 +3092,12 @@ public class TopicShayariActivity extends AppCompatActivity {
 
                 if (mAuth.getCurrentUser() == null) {
                     mProgress.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(TopicShayariActivity.this,R.style.AlertDialogTheme);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TopicShayariActivity.this, R.style.AlertDialogTheme);
                     builder.setTitle("To add shayari to favorite you need login to the app!");
                     builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(TopicShayariActivity.this,LoginActivity.class));
+                            startActivity(new Intent(TopicShayariActivity.this, LoginActivity.class));
                             finish();
                         }
                     });
@@ -2523,19 +3116,19 @@ public class TopicShayariActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 mProgress.dismiss();
-                                if (task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     Toast.makeText(TopicShayariActivity.this, "Shayari removed from Favourite!", Toast.LENGTH_SHORT).show();
-                                    isCurShayariFav=false;
+                                    isCurShayariFav = false;
                                     int imgResource = R.drawable.ic_favorite_border_24;
                                     favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
                                     favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
                                     favButton.setText("Add to fav");
-                                }else{
+                                } else {
                                     Toast.makeText(TopicShayariActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                    }else{
+                    } else {
 
                         HashMap<String, String> map = new HashMap<>();
                         map.put("topic", topic);
@@ -2547,7 +3140,7 @@ public class TopicShayariActivity extends AppCompatActivity {
                                 mProgress.dismiss();
                                 if (task.isSuccessful()) {
                                     Toast.makeText(TopicShayariActivity.this, "Shayari added to favourite!", Toast.LENGTH_SHORT).show();
-                                    isCurShayariFav=true;
+                                    isCurShayariFav = true;
                                     int imgResource = R.drawable.ic_favorite_24;
                                     favButton.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
                                     favButton.setCompoundDrawableTintList(getColorStateList(R.color.button_text_color));
@@ -2564,9 +3157,15 @@ public class TopicShayariActivity extends AppCompatActivity {
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
+                    mInterstitialAd.setAdListener(new AdListener() {
+                        @Override
+                        public void onAdClosed() {
+                            goToEditActivity();
+                        }
+                    });
                 } else {
                     goToEditActivity();
                 }

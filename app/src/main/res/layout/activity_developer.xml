@@ -32,7 +32,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/montserrat"
-        android:text="I am a self taught android developer loves developing android application and working on java projects. I have several android projects and including personal learning projects and college minor and major projects."
+        android:text="Hi, I am the developer of this application . If you have any suggestions or feedback feel free to message me, I will respond to your messages. Please provide your feedback in the feedback section it really means a lot to me. \n\nThank  you for installing the application."
         android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="18sp"

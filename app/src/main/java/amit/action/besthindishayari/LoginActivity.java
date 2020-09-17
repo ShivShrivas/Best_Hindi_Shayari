@@ -147,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goToMainActivity() {
         Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+        intent.putExtra("login_type","email");
         startActivity(intent);
         finish();
     }

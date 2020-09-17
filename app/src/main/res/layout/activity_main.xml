@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="2dp"
-            app:layout_constraintBottom_toTopOf="@+id/adView"
+            app:layout_constraintBottom_toTopOf="@+id/main_adView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -837,7 +837,7 @@
         </ScrollView>
 
         <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
+            android:id="@+id/main_adView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
